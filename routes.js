@@ -44,6 +44,13 @@ app.get('/admin', function (req, res) {
 // API
 //////////////////
 
-app.get('/calendar/:id', ical.fromId);
 
-}; //module.exports
+// USERS
+
+// CALENDARS
+
+app.get('/calendars/:id', ical.fromId);
+
+};
+
+// TASKS
