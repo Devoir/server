@@ -1,0 +1,38 @@
+<% include ../layout/header %>
+
+<section class="home" ng-controller="homeCtrl">
+
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<p>Ical Feed</p>
+			<form ng-submit="getCalendar()">
+				<input type="text" class="form-control" ng-model="calendarId" placeholder="calendar id">
+				<br>
+				<button type="submit" class="btn btn-primary">Get Calendar</button>
+				<br>
+			</form>
+			<br>
+
+			<!-- EVENTS -->
+			<div class="event" ng-repeat="event in events | orderBy:'start'">
+				<h4>
+					{{event.summary}}
+					<small>
+						{{event.start | date:'short'}}
+						<span ng-if="event.end">-</span>
+						{{event.end | date:'short'}}
+					</small>
+				</h4>
+
+				<p>{{event.description}}</p>
+
+				<hr>
+			</div>
+
+		</div>
+	</div>
+
+</section>
+
+<% include ../layout/footer %>

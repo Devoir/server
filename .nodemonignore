@@ -1,0 +1,9 @@
+# Client-side resources
+less/
+client/
+public/
+templates/pages/
+
+# Other
+.git/
+test/

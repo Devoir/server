@@ -1,0 +1,33 @@
+{
+  "name": "devoir",
+  "version": "0.0.0",
+  "description": "Learning Suite ...",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TODO",
+  "license": "All Rights Reserved",
+  "dependencies": {
+    "async": "^0.9.0",
+    "body-parser": "^1.9.2",
+    "cookie-parser": "^1.3.3",
+    "ejs": "^1.0.0",
+    "express": "~4.6.1",
+    "ical": "^0.3.1",
+    "method-override": "^2.3.0",
+    "morgan": "^1.4.1"
+  },
+  "devDependencies": {
+    "errorhandler": "^1.2.2",
+    "gulp": "^3.8.9",
+    "gulp-concat": "^2.4.1",
+    "gulp-less": "^1.3.6",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1",
+    "mocha": "^2.0.1"
+  }
+}

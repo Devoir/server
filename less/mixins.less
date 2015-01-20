@@ -1,0 +1,21 @@
+.clearfix() {
+	// http://www.m6tt.com/2011/09/22/a-less-approach-to-clearfix
+	zoom: 1;
+	&:before { content: ''; display: block; }
+	&:after { content: ''; display: table; clear: both; }
+}
+
+.rounded (@radius: 5px) {
+	-webkit-border-radius: @radius;
+	   -moz-border-radius: @radius;
+	     -o-border-radius: @radius;
+	        border-radius: @radius;
+	background-clip: padding-box;
+}
+
+.transition(@time: 0.15s) {
+	-webkit-transition: all @time ease-in-out;
+	   -moz-transition: all @time ease-in-out;
+	    -ms-transition: all @time ease-in-out;
+	        transition: all @time ease-in-out;
+}
