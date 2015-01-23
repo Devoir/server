@@ -13,7 +13,7 @@ controllers.controller('homeCtrl', ['$scope', '$http', function ($scope, $http) 
 
 	$scope.getCalendar = function () {
 		var id = $scope.calendarId;
-		var url = '/calendar/' + encodeURIComponent(id);
+		var url = '/calendars/' + encodeURIComponent(id);
 		
 		$http.get(url)
 		.success(function(data, status, headers, config) {
