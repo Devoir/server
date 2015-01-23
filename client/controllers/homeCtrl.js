@@ -4,13 +4,14 @@ var controllers = controllers || angular.module('controllers', []);
 controllers.controller('homeCtrl', ['$scope', '$http', function ($scope, $http) {
 	console.log('homeCtrl loaded');
 
-	$scope.calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=GGC-K5hHAoZM';
+	$scope.calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
 
 	$scope.getCalendar = function () {
 		var id = $scope.calendarId;
 		var url = '/calendars/' + encodeURIComponent(id);
 
 		$scope.loadingFeed = true;
+		$scope.events = {};
 		
 		$http.get(url)
 		.success(function(data, status, headers, config) {
