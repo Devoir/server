@@ -16,13 +16,16 @@ controllers.controller('homeCtrl', ['$scope', '$http', function ($scope, $http) 
 		var url = '/calendars/' + encodeURIComponent(id);
 
 		$scope.loadingFeed = true;
-		$scope.events = {};
+		$scope.events = [];
 		
 		$http.get(url)
 		.success(function(data, status, headers, config) {
 			// this callback will be called asynchronously
 			// when the response is available
-			$scope.events = data;
+			for (var d in data) {
+				$scope.events.push(data[d]);
+			}
+			
 			$scope.loadingFeed = false;
 		})
 		.error(function(data, status, headers, config) {
@@ -34,5 +37,9 @@ controllers.controller('homeCtrl', ['$scope', '$http', function ($scope, $http) 
 			};
 			$scope.loadingFeed = false;
 		});
-	}
+	};
+
+	$scope.checkOff = function (event) {
+		event.done = !event.done;
+	};
 }]);
