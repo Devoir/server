@@ -25,11 +25,10 @@
 
 			<!-- EVENTS -->
 			<div class="event" ng-repeat="event in events | orderBy:'start'" ng-class="{'checked-off': event.done}" ng-click="checkOff(event)">
-				<div class="event-title">
+				<div>
 					<h4>
 						<input type="checkbox" ng-model="event.done">
-						&nbsp;
-						{{event.summary}}
+						<span class="event-title">{{event.summary}}</span>
 					</h4>
 					<small>
 						{{event.start | date:'short'}}
