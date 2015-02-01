@@ -1,33 +1,19 @@
-var Task = (function () {
+exports.getById = function (id) {
 
-	////////////////
-	//PUBLIC
-	////////////////
+};
 
-	Task.prototype.getById = function (id) {
+exports.getAll = function () {
 
-	};
+};
 
-	Task.prototype.getAll = function (id) {
+exports.create = function () {
 
-	};
+};
 
-	Task.prototype.create = function (id) {
+exports.update = function(id) {
 
-	};
+};
 
-	Task.prototype.update = function (id, data) {
+exports.delete = function (id) {
 
-	};
-
-	Task.prototype.delete = function (id) {
-
-	};
-
-	////////////////
-	//PRIVATE
-	////////////////
-
-})();
-
-module.exports = Task;
+};

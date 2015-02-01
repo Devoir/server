@@ -1,33 +1,40 @@
-var User = (function () {
+var UserPrototype = {
+		//instance methods
+		isAdmin : function () {
+			//FUTURE
+			return false;
+		}
+	},
 
-	////////////////
-	//PUBLIC
-	////////////////
-
-	User.prototype.getById = function (id) {
-
+	User = function (email, displayName) {
+		var user = Object.create(UserPrototype);
+		user.email = email;
+		user.displayName = displayName;
+		return user;
 	};
 
-	User.prototype.getAll = function (id) {
+////////////////
+//PUBLIC
+////////////////
 
-	};
+exports.getById = function (id) {
 
-	User.prototype.create = function (id) {
+};
 
-	};
+exports.getAll = function (callback) {
+	var newUser = User('fake@email.com', 'fakey pants');
+	console.log(newUser.isAdmin());
+	callback(null, [newUser]);
+};
 
-	User.prototype.update = function (id, data) {
+exports.create = function () {
 
-	};
+};
 
-	User.prototype.delete = function (id) {
+exports.update = function(id) {
 
-	};
+};
 
-	////////////////
-	//PRIVATE
-	////////////////
+exports.delete = function (id) {
 
-})();
-
-module.exports = User;
+};

@@ -1,33 +1,19 @@
-var Course = (function () {
+exports.getById = function (id) {
 
-	////////////////
-	//PUBLIC
-	////////////////
+};
 
-	Course.prototype.getById = function (id) {
+exports.getAll = function () {
 
-	};
+};
 
-	Course.prototype.getAll = function (id) {
+exports.create = function () {
 
-	};
+};
 
-	Course.prototype.create = function (id) {
+exports.update = function(id) {
 
-	};
+};
 
-	Course.prototype.update = function (id, data) {
+exports.delete = function (id) {
 
-	};
-
-	Course.prototype.delete = function (id) {
-
-	};
-
-	////////////////
-	//PRIVATE
-	////////////////
-
-})();
-
-module.exports = Course;Calendars.model.js
+};
