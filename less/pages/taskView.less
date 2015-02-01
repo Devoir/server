@@ -1,0 +1,41 @@
+section.task-view {
+	padding: 5rem;
+
+	.event {
+		cursor: pointer;
+
+		h4 {
+			display: inline-block;
+			
+			span {
+				margin: 0 1rem;
+			}
+		}
+
+		p {
+			margin-left: 5rem;
+			max-width: 600px;
+		}
+
+		small {
+			color: #aaa;
+			float: right;
+		}
+
+		padding: 2rem 1rem;
+		border-top: 1px solid #ccc;
+		
+		&:hover{
+			background-color: #dedede;
+			color: inherit;
+		}
+	}
+
+	.checked-off {
+		color: #ccc;
+
+		.event-title {
+			text-decoration: line-through;
+		}
+	}
+}

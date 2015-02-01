@@ -8,21 +8,23 @@ var users		= require('./routes/api/users.js');
 var tasks		= require('./routes/api/tasks.js');
 var courses		= require('./routes/api/courses.js');
 
+var staticPages = require('./routes/static/public.js');
+
 module.exports = function (app, passport) {
 
 ///////////////
 // MIDDLEWARE
 ///////////////
 
-// var middleware = require('./routes/middleware.js');
+var middleware = require('./routes/middleware.js');
+var authUser = middleware.authUser;
 
 //////////////////
 // STATIC ROUTES
 //////////////////
 
-app.get('/', function (req, res) {
-	res.render('../templates/pages/home.ejs');
-});
+app.get('/', staticPages.home);
+app.get('/taskview', staticPages.taskView);
 
 //////////////////
 // API
@@ -32,8 +34,10 @@ var api = express.Router();
 require('./routes/params.js')(api);
 
 // USERS
-
-app.get('/login', function (req, res) {});
+app.post('/login', passport.authenticate('google'), function (req, res) {
+	console.log('got it', req.user);
+	res.end();
+});
 app.get('/logout', function (req, res) {});
 
 api.get('/users/', users.getAllUsers);

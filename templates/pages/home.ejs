@@ -1,48 +1,26 @@
-<% include ../layout/header %>
+<!doctype html>
+<html ng-app="app">
+	<head>
 
-<section class="home" ng-controller="homeCtrl">
+		<title>Devoir</title>
+		<% include ../layout/headIncludes %>
+		<script src="https://apis.google.com/js/client:platform.js" async defer></script>
 
-	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
-			<p>Ical Feed</p>
-			<form ng-submit="getCalendar()">
-				<input type="text" class="form-control" ng-model="calendarId" placeholder="calendar id">
-				<br>
-				<button type="submit" class="btn btn-primary">Get Calendar</button>
-				<br>
-			</form>
-			<br>
 
-			<!-- Loading -->
-			<h1 ng-if="loadingFeed">Loading...</h1>
+	</head>
+	<body>
 
-			<!-- Error message -->
-			<div ng-if="error">
-				<h1>{{error.status}}</h1>
-				<pre>{{error.data | json}}</pre>
-			</div>
-
-			<!-- EVENTS -->
-			<div class="event" ng-repeat="event in events | orderBy:'start'" ng-class="{'checked-off': event.done}" ng-click="checkOff(event)">
-				<div>
-					<h4>
-						<input type="checkbox" ng-model="event.done">
-						<span class="event-title">{{event.summary}}</span>
-					</h4>
-					<small>
-						{{event.start | date:'short'}}
-						<span ng-if="event.end">-</span>
-						{{event.end | date:'short'}}
-					</small>
+		<section class="home" ng-controller="homeCtrl">
+			<div id="mask">
+				<div id="title">
+					<h1>Devoir</h1>
+					<h2>Don't fall behind in your homework</h2>
+					<br>
+					<a class="btn btn-danger" ng-click="login()" ng-disabled="disableSignIn">Sign up with Google</a>
 				</div>
-
-				<p>{{event.description}}</p>
+				
 			</div>
+		</section>
 
-		</div>
-	</div>
-
-</section>
-
-<% include ../layout/footer %>
+	</body>
+</html>

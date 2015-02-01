@@ -20,11 +20,12 @@ if (process.env.NODE_ENV === 'development') {
 var errorHandler	= require('errorhandler');
 
 //User auth/sessions
-// var passport	= require('passport');
-// var session		= require('express-session');
+var passport	= require('passport');
+var session		= require('express-session');
 
 //Our configuration and modules
 var config = require('./config.js');
+require('./config/passport.js')(passport, config);
 
 //////////////////////
 // CONFIGURE EXPRESS
@@ -39,7 +40,7 @@ app.use(methodOverride());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-// app.use(passport.initialize());
+app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -59,14 +60,15 @@ var sessionMiddleware = session({
 	})
 });
 app.use(sessionMiddleware);
-app.use(passport.session());
+
 */
+app.use(passport.session());
 
 //////////////////////
 // LOAD OUR ROUTES
 //////////////////////
 
-require('./routes.js')(app) //, passport);
+require('./routes.js')(app, passport);
 
 /////////////////////
 // START THE SERVER

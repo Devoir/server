@@ -1,0 +1,48 @@
+<% include ../layout/header %>
+
+<section class="task-view" ng-controller="taskViewCtrl">
+
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<p>Ical Feed</p>
+			<form ng-submit="getCalendar()">
+				<input type="text" class="form-control" ng-model="calendarId" placeholder="calendar id">
+				<br>
+				<button type="submit" class="btn btn-primary">Get Calendar</button>
+				<br>
+			</form>
+			<br>
+
+			<!-- Loading -->
+			<h1 ng-if="loadingFeed">Loading...</h1>
+
+			<!-- Error message -->
+			<div ng-if="error">
+				<h1>{{error.status}}</h1>
+				<pre>{{error.data | json}}</pre>
+			</div>
+
+			<!-- EVENTS -->
+			<div class="event" ng-repeat="event in events | orderBy:'start'" ng-class="{'checked-off': event.done}" ng-click="checkOff(event)">
+				<div>
+					<h4>
+						<input type="checkbox" ng-model="event.done">
+						<span class="event-title">{{event.summary}}</span>
+					</h4>
+					<small>
+						{{event.start | date:'short'}}
+						<span ng-if="event.end">-</span>
+						{{event.end | date:'short'}}
+					</small>
+				</div>
+
+				<p>{{event.description}}</p>
+			</div>
+
+		</div>
+	</div>
+
+</section>
+
+<% include ../layout/footer %>
