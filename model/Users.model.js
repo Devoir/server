@@ -1,40 +1,50 @@
 var UserPrototype = {
-		//instance methods
+		// instance methods
 		isAdmin : function () {
 			//FUTURE
 			return false;
 		}
 	},
 
-	User = function (email, displayName) {
+	// user factory
+	User = function (data) {
 		var user = Object.create(UserPrototype);
-		user.email = email;
-		user.displayName = displayName;
+		for (var key in data)
+			user[key] = data[key];
 		return user;
 	};
 
 ////////////////
-//PUBLIC
+// PUBLIC
 ////////////////
 
-exports.getById = function (id) {
+// TODO get rid of this.  when we have a db...
+var fakeUserData = {
+	email : 'fake@email.com',
+	displayName: 'fakey pants'
+};
 
+exports.getById = function (id, callback) {
+	var fakeUser = User(fakeUserData);
+
+	callback(null, fakeUser);
 };
 
 exports.getAll = function (callback) {
-	var newUser = User('fake@email.com', 'fakey pants');
-	console.log(newUser.isAdmin());
-	callback(null, [newUser]);
+
+	var fakeUser = User(fakeUserData);
+	
+	callback(null, [fakeUser]);
 };
 
-exports.create = function () {
-
-};
-
-exports.update = function(id) {
+exports.create = function (callback) {
 
 };
 
-exports.delete = function (id) {
+exports.update = function(id, callback) {
+
+};
+
+exports.delete = function (id, callback) {
 
 };

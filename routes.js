@@ -18,13 +18,6 @@ module.exports = function (app, passport) {
 
 // var middleware = require('./routes/middleware.js');
 
-/////////////////////
-// ROUTE PARAMETERS
-/////////////////////
-
-// require('./routes/params.js')(app);
-
-
 //////////////////
 // STATIC ROUTES
 //////////////////
@@ -37,37 +30,36 @@ app.get('/', function (req, res) {
 // API
 //////////////////
 
+var api = express.Router();
+require('./routes/params.js')(api);
+
 // USERS
 
 app.get('/login', function (req, res) {});
-
 app.get('/logout', function (req, res) {});
 
-var usersApi = express.Router();
-
-usersApi.get('/', users.getAllUsers);
-usersApi.post('/', users.create);
-usersApi.get('/:user', users.getOne);
-usersApi.put('/:user', users.update);
-
-app.use('/api/users', usersApi);
+api.get('/users/', users.getAllUsers);
+api.post('/users/', users.create);
+api.get('/users/:user', users.getOne);
+api.put('/users/:user', users.update);
 
 // COURSES
 
 app.get('/calendars/:id', ical.fromId);
 
-var coursesApi = express.Router();
-
-app.use('/api/courses', coursesApi);
+api.get('/courses/', courses.getForUser);
+api.post('/courses/', courses.create);
+api.get('/courses/:course', courses.getOne);
+api.put('/courses/:course', courses.update);
+api.delete('/courses/:course', courses.delete);
 
 // TASKS
 
-var tasksApi = express.Router();
-
-app.use('/api/courses/:course/tasks', tasksApi);
 
 // ADMIN
 
 app.get('/admin', function (req, res) {});
+
+app.use('/api', api);
 
 };//END MODULE

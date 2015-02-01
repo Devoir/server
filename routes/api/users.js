@@ -9,12 +9,15 @@ exports.getAllUsers = function (req, res) {
 
 exports.create = function (req, res) {
 
+	res.json({ not: 'implemented'});
 };
 
 exports.getOne = function (req, res) {
 
+	res.json({ not: 'implemented'});
 };
 
 exports.update = function (req, res) {
 
+	res.json({ not: 'implemented'});
 };
