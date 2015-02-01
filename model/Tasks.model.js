@@ -10,8 +10,16 @@ var TaskPrototype = {
 		return task;
 	};
 
-exports.getById = function (id, callback) {
+var fakeTaskData = {
+	name: 'homework',
+	description: 'boring stuff',
+	start: 'today',
+	end: 'tomorrow'
+};
 
+exports.getById = function (id, callback) {
+	var fakeTask = Task(fakeTaskData);
+	callback(null, fakeTask);
 };
 
 exports.getAll = function (callback) {

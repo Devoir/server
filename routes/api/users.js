@@ -14,7 +14,7 @@ exports.create = function (req, res) {
 
 exports.getOne = function (req, res) {
 
-	res.json({ not: 'implemented'});
+	res.json(req.user);
 };
 
 exports.update = function (req, res) {

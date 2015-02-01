@@ -10,7 +10,6 @@ exports.create = function (req, res) {
 
 exports.getOne = function (req, res) {
 	
-	console.log(req.course);
 	res.json(req.course);
 };
 

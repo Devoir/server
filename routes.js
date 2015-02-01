@@ -55,6 +55,12 @@ api.delete('/courses/:course', courses.delete);
 
 // TASKS
 
+api.get('/courses/:course/tasks', tasks.getForCourse);
+api.post('/courses/:course/tasks', tasks.create);
+
+api.get('/tasks/:task', tasks.getOne);
+api.put('/tasks/:task', tasks.update);
+api.delete('/tasks/:task', tasks.delete);
 
 // ADMIN
 
