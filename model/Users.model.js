@@ -37,7 +37,7 @@ exports.getAll = function (callback) {
 	callback(null, [fakeUser]);
 };
 
-exports.create = function (callback) {
+exports.create = function (data, callback) {
 
 };
 

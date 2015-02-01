@@ -1,9 +1,7 @@
 //////////////////////
 // LOAD DEPENDENCIES
 //////////////////////
-
 var express		= require('express');
-var ical		= require('./library/ical.js');
 
 // controllers
 var users		= require('./routes/api/users.js');
@@ -45,8 +43,6 @@ api.put('/users/:user', users.update);
 
 // COURSES
 
-app.get('/calendars/:id', ical.fromId);
-
 api.get('/courses/', courses.getForUser);
 api.post('/courses/', courses.create);
 api.get('/courses/:course', courses.getOne);
@@ -57,6 +53,7 @@ api.delete('/courses/:course', courses.delete);
 
 api.get('/courses/:course/tasks', tasks.getForCourse);
 api.post('/courses/:course/tasks', tasks.create);
+api.post('/courses/:course/tasks/import', tasks.importFromFeed);
 
 api.get('/tasks/:task', tasks.getOne);
 api.put('/tasks/:task', tasks.update);

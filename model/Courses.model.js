@@ -27,8 +27,16 @@ exports.getAll = function (callback) {
 
 };
 
-exports.create = function (callback) {
+exports.create = function (data, callback) {
 
+	//validate the data
+
+	//insert a row into the DB
+
+	//return a Course object
+	var newCourse = Course(data);
+
+	callback(null, newCourse);
 };
 
 exports.update = function(id, callback) {

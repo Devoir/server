@@ -26,7 +26,7 @@ exports.getAll = function (callback) {
 
 };
 
-exports.create = function (callback) {
+exports.create = function (data, callback) {
 
 };
 

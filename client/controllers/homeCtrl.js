@@ -7,19 +7,17 @@ controllers.controller('homeCtrl', ['$scope', '$http', function ($scope, $http) 
 	$scope.calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
 
 	$scope.getCalendar = function () {
-		var id = $scope.calendarId;
-		var url = '/calendars/' + encodeURIComponent(id);
-
 		$scope.loadingFeed = true;
 		$scope.events = [];
 		
-		$http.get(url)
+		var courseId = 5;
+
+		$http.post('/api/courses/' + courseId + '/tasks/import', {icalFeed : $scope.calendarId})
 		.success(function(data, status, headers, config) {
 			// this callback will be called asynchronously
 			// when the response is available
-			for (var d in data) {
+			for (var d in data)
 				$scope.events.push(data[d]);
-			}
 			
 			$scope.loadingFeed = false;
 		})
