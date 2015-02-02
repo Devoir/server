@@ -77,4 +77,32 @@ controllers.controller('taskViewCtrl', ['$scope', '$http', function ($scope, $ht
 	$scope.checkOff = function (event) {
 		event.done = !event.done;
 	};
+
+
+	//////////////////
+	// TEMP DATA
+	//////////////////
+
+	$scope.courses = [
+		{
+			name: 'Course',
+			color: '#ccc'
+		},
+		{
+			name: 'Course',
+			color: '#ccc'
+		},
+		{
+			name: 'Course',
+			color: '#ccc'
+		},
+		{
+			name: 'Course',
+			color: '#ccc'
+		},
+		{
+			name: 'Course',
+			color: '#ccc'
+		},
+	];
 }]);

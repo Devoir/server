@@ -2,9 +2,29 @@
 
 <section class="task-view" ng-controller="taskViewCtrl">
 
+<!-- 	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-9">
+			Top area...
+		</div>
+	</div> -->
 	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
+		<div class="col-md-1"></div>
+
+		<!-- SIDE COLUMN -->
+		<div class="col-md-2">
+			<div class="affix">
+				<h3>Courses</h3>
+				<div class="course">All</div>
+				<div class="course" ng-repeat="course in courses">
+					{{course.name}}
+				</div>
+				<button class="btn btn-danger">Add Course</button>
+			</div>
+		</div>
+
+		<!-- TASK LIST -->
+		<div class="col-md-7">
 			<p>Ical Feed</p>
 			<form ng-submit="getCalendar()">
 				<input type="text" class="form-control" ng-model="calendarId" placeholder="calendar id">
