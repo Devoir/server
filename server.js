@@ -40,7 +40,6 @@ app.use(methodOverride());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -62,6 +61,13 @@ var sessionMiddleware = session({
 app.use(sessionMiddleware);
 
 */
+app.use(session({
+	resave: true,
+	saveUninitialized: true,
+	// FUTURE come up with a hash or something for the the secret
+	secret: 'devoir secrets are golden stuff'
+}));
+app.use(passport.initialize());
 app.use(passport.session());
 
 //////////////////////

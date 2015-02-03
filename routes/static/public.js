@@ -1,13 +1,16 @@
 // var gOauth = require('../../library/googleOauth.js');
 
 exports.home = function (req, res) {
-	// var data = {
-	// 	url : gOauth.generateAuthUrl()
-	// };
+	if (req.isAuthenticated())
+		return res.redirect('/taskview');
+
 	res.render('../templates/pages/home.ejs');
 };
 
 exports.taskView = function (req, res) {
 	console.log('user', req.user);
-	res.render('../templates/pages/taskView.ejs');
+	if (!req.isAuthenticated())
+		return res.redirect('/');
+
+	res.render('../templates/pages/taskView.ejs', req.user._json);
 };

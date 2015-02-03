@@ -33,12 +33,30 @@ app.get('/taskview', staticPages.taskView);
 var api = express.Router();
 require('./routes/params.js')(api);
 
-// USERS
-app.post('/login', passport.authenticate('google'), function (req, res) {
-	console.log('got it', req.user);
-	res.end();
+app.get('/auth/google', passport.authenticate('google', 
+	{ scope: [
+		'https://www.googleapis.com/auth/userinfo.profile',
+		'https://www.googleapis.com/auth/userinfo.email'] }),
+	function (req, res) {
+	    // The request will be redirected to Google for authentication, so this
+    	// function will not be called.
+	}
+);
+
+app.get('/auth/google/callback',
+	passport.authenticate('google', { failureRedirect: '/' }),
+	function(req, res) {
+		console.log("Google sent us something (get)");
+		res.redirect('/taskview');
+	}
+);
+
+app.get('/logout', function (req, res) {
+	req.logout();
+	res.redirect('/');
 });
-app.get('/logout', function (req, res) {});
+
+// USERS
 
 api.get('/users/', users.getAllUsers);
 api.post('/users/', users.create);
