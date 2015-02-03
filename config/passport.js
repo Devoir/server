@@ -1,10 +1,11 @@
 var CLIENT_ID = "1067500941491-p7d6k8en78uc7bbnq5p05jfmir8qpmgk.apps.googleusercontent.com";
 var CLIENT_SECRET = "2qfm2TD3tH3pJarT8nrLPhU0";
-var REDIRECT_URL = "http://localhost:3000/auth/google/callback";
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 module.exports = function (passport, config){
+	var REDIRECT_URL = config.homeUrl + 'auth/google/callback';
+
 	//example: https://github.com/jaredhanson/passport-google-oauth/blob/master/examples/oauth2/app.js
 	passport.use(new GoogleStrategy({
 			clientID: CLIENT_ID,

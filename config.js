@@ -21,28 +21,17 @@ if (process.env.NODE_ENV == "dev") {
 		password: ""
 	};
 
-	Config.stripe = {
-		publicKey	: "TODO",
-		secretKey	: "TODO"
-	};
-
 } else {
 
 	Config.environment = "production";
-	Config.homeUrl = "TODO";
+	Config.homeUrl = "http://107.170.243.119:3000";
 
 	Config.db = {
 		host: "localhost",
 		database: "TODO",
 		user: "TODO",
 		password: "TODO"
-	};
-
-	Config.stripe = {
-		publicKey	: "TODO",
-		secretKey	: "TODO"
-	};
-	
+	};	
 }
 
 Config.isLiveSite = function () {
