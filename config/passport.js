@@ -4,7 +4,7 @@ var CLIENT_SECRET = "2qfm2TD3tH3pJarT8nrLPhU0";
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 module.exports = function (passport, config){
-	var REDIRECT_URL = config.homeUrl + 'auth/google/callback';
+	var REDIRECT_URL = config.homeUrl + '/auth/google/callback';
 
 	//example: https://github.com/jaredhanson/passport-google-oauth/blob/master/examples/oauth2/app.js
 	passport.use(new GoogleStrategy({
