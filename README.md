@@ -2,9 +2,9 @@
 
 To run the server make sure you have **node** and **npm** (node package manager) installed.
 
-Before you start set an environment variable
+Before you start set an environment variable (you only have to do this once)
 
-NODE_ENV=dev
+    NODE_ENV=dev
 
 Go to the directory and run     
     $ npm install     
