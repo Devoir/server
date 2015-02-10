@@ -7,6 +7,7 @@ Before you start set an environment variable (you only have to do this once)
     NODE_ENV=dev
 
 Go to the directory and run     
+
     $ npm install     
     $ node server.js      
     
