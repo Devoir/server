@@ -1,5 +1,7 @@
-# devoir
+# DEVOIR    
 
+
+##Run the server
 To run the server make sure you have **node** and **npm** (node package manager) installed.
 
 Before you start set an environment variable (you only have to do this once)
@@ -14,7 +16,7 @@ Go to the directory and run
 Then you can go to it in your browser at http://localhost:3000
 
 
-To compile the Less on the front end and minify the JS:    
+##Compile the Less on the front end and minify the JS:    
 
 Install gulp:  http://gulpjs.com/
 
