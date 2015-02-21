@@ -81,6 +81,17 @@ api.get('/tasks/:task', tasks.getOne);
 api.put('/tasks/:task', tasks.update);
 api.delete('/tasks/:task', tasks.delete);
 
+// ERROR HANDLING MIDDLEWARE
+api.use(function (err, req, res, next) {
+	console.log('//-----------------Error-----------------//');
+	console.error(err);
+	console.log('^-----------------------------------------^');
+	//TODO email the admins
+	//TODO get more creative here.
+	var status = err.status || 500;
+	res.status(status).send('Something broke!');
+});
+
 // ADMIN
 
 app.get('/admin', function (req, res) {});
