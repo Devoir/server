@@ -3,6 +3,8 @@ var CLIENT_SECRET = "2qfm2TD3tH3pJarT8nrLPhU0";
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
+var User = require('../model/Users.model.js');
+
 module.exports = function (passport, config){
 	var REDIRECT_URL = config.homeUrl + '/auth/google/callback';
 
@@ -17,7 +19,38 @@ module.exports = function (passport, config){
 			console.log('refreshToken', refreshToken);
 			console.log('profile', profile);
 
-			return done(null, profile);
+			// check if they are in the db
+			var email = profile._json.email;
+			User.getByEmail(email, function(err, user) {
+				if (err) return done(err);
+
+				if (!user){
+					var newUser = {
+						email: email, 
+						displayName: profile._json.name
+					}
+
+					return createUser(newUser, profile._json.name);
+				}
+
+				returnUser(user);
+			});
+
+			function createUser (newUser, displayName) {
+				User.create(newUser, function(err, newUser) {
+					if (err) return done(err);
+					newUser.display_name = displayName;
+					returnUser(newUser);
+				})
+			}
+
+			function returnUser (user) {
+				var data = profile._json;
+				data.id = user.id;
+				data.displayName = user.display_name;
+
+				return done(null, data);
+			}
 		}
 	));
 

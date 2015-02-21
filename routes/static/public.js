@@ -12,5 +12,5 @@ exports.taskView = function (req, res) {
 	if (!req.isAuthenticated())
 		return res.redirect('/');
 
-	res.render('../templates/pages/taskView.ejs', req.user._json);
+	res.render('../templates/pages/taskView.ejs', req.user);
 };

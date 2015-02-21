@@ -59,7 +59,7 @@ app.get('/logout', function (req, res) {
 // USERS
 
 api.get('/users/', users.getAllUsers);
-api.post('/users/', users.create);
+// api.post('/users/', users.create);
 api.get('/users/:user', users.getOne);
 api.put('/users/:user', users.update);
 

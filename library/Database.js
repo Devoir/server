@@ -12,11 +12,11 @@ var conStr = 'postgresql://' +
 
 exports.getClient = getClient;
 
-exports.query = function (q, callback) {
+exports.query = function (q, params, callback) {
 	getClient(function(err, client) {
 		if (err) return callback(err);
 
-		client.query(q, function(err, rows) {
+		client.query(q, params, function(err, rows) {
 			
 			callback(err, rows);
 			//close up
