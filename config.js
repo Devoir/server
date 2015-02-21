@@ -15,9 +15,9 @@ if (process.env.NODE_ENV == "dev") {
 	Config.homeUrl = "http://localhost:3000";
 
 	Config.db = {
-		host: "localhost",
-		database: "TODO",
-		user: "root",
+		host: "localhost:5432",
+		name: "devoir",
+		user: "postgres",
 		password: ""
 	};
 
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV == "dev") {
 
 	Config.db = {
 		host: "localhost",
-		database: "TODO",
+		name: "TODO",
 		user: "TODO",
 		password: "TODO"
 	};	
