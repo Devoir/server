@@ -11,6 +11,8 @@ Next you will need to set up your DB
 4. create the tables with the create statements from our design doc
     
     $ createuser --interactive    
+    #Enter name of role to add: postgres
+    #Shall the new role be a superuser? y
     $ createdb devoir    
 
     #run postgres in another tab
