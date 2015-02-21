@@ -10,11 +10,25 @@ var conStr = 'postgresql://' +
 	config.db.name;
 
 
-//callback function (err, client, done)
-exports.getClient = function (callback) {
+exports.getClient = getClient;
+
+exports.query = function (q, callback) {
+	getClient(function(err, client) {
+		if (err) return callback(err);
+
+		client.query(q, function(err, rows) {
+			
+			callback(err, rows);
+			//close up
+			client.end();
+		});
+	});
+}
+
+function getClient (callback) {
 	var client = new Client();
 	client.connect(conStr, function(err) {
+
 		callback(err, client);
 	});
 };
-

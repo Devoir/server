@@ -1,3 +1,5 @@
+var db = require('../library/Database.js');
+
 var UserPrototype = {
 		// instance methods
 		isAdmin : function () {
@@ -31,10 +33,15 @@ exports.getById = function (id, callback) {
 };
 
 exports.getAll = function (callback) {
+	db.query('SELECT * FROM users', function(err, rows) {
+		if (err) return callback(err);
 
-	var fakeUser = User(fakeUserData);
-	
-	callback(null, [fakeUser]);
+		var users = rows.map(function(row) {
+			return User(row);
+		});
+
+		callback(null, users);
+	});
 };
 
 exports.create = function (data, callback) {
