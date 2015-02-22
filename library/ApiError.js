@@ -1,7 +1,3 @@
-var errorProto = {
-	madeByDevoir : true
-}
-
 /*
 	Create one of these or an Error object and pass it along the callback chain when an error happens
 
@@ -9,28 +5,23 @@ var errorProto = {
 	@param {Object} options (Optional) any other info to consider in the error like user input etc.
 
 */
-exports.create = function (err, options) {
+exports.create = function (err, status) {
+	var apiError;
+	if ( !(err instanceof Error) ) {
+		//create an instance of an error
+		apiError = new Error('(no message)');
+		apiError.data = err;
+	} else {
+		apiError = err;
+	}
 
-	var apiError = Object.create(errorProto);
-
-	if (err === undefined || err === null || err === "")
-		err = new Error();
-
-	var status = (options && options.status) ? options.status : 500;
-
-	apiError.err 		= err;
-	apiError.status		= err.code || err.status || status;
-	apiError.message	= err.message || '(No message)';
-	apiError.stack		= err.stack || new Error().stack;
-	apiError.options	= options;
+	apiError.status = status || 500;
 
 	return apiError;
 }
 
-exports.handle = function (err, next) {
-	if (!err.madeByDevoir) {
-		err = exports.create(err);
-	}
+exports.handle = function (err, next, status) {
+	err = exports.create(err, status);
 
 	return next(err);
 }

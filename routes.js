@@ -1,6 +1,5 @@
-//////////////////////
+
 // LOAD DEPENDENCIES
-//////////////////////
 var express		= require('express');
 
 // controllers
@@ -12,26 +11,15 @@ var staticPages = require('./routes/static/public.js');
 
 module.exports = function (app, passport) {
 
-///////////////
-// MIDDLEWARE
-///////////////
 
-var middleware = require('./routes/middleware.js');
-var authUser = middleware.authUser;
-
-//////////////////
 // STATIC ROUTES
-//////////////////
 
 app.get('/', staticPages.home);
 app.get('/taskview', staticPages.taskView);
+// app.get('/admin', function (req, res) {});
 
-//////////////////
-// API
-//////////////////
 
-var api = express.Router();
-require('./routes/params.js')(api);
+// AUTHENTICATION
 
 app.get('/auth/google', passport.authenticate('google', 
 	{ scope: [
@@ -56,46 +44,10 @@ app.get('/logout', function (req, res) {
 	res.redirect('/');
 });
 
-// USERS
 
-api.get('/users/', users.getAllUsers);
-// api.post('/users/', users.create);
-api.get('/users/:user', users.getOne);
-api.put('/users/:user', users.update);
+// API
 
-// COURSES
+require('./routes/api/routes.js')(app);
 
-api.get('/courses/', courses.getForUser);
-api.post('/courses/', courses.create);
-api.get('/courses/:course', courses.getOne);
-api.put('/courses/:course', courses.update);
-api.delete('/courses/:course', courses.delete);
-
-// TASKS
-
-api.get('/courses/:course/tasks', tasks.getForCourse);
-api.post('/courses/:course/tasks', tasks.create);
-api.post('/courses/:course/tasks/import', tasks.importFromFeed);
-
-api.get('/tasks/:task', tasks.getOne);
-api.put('/tasks/:task', tasks.update);
-api.delete('/tasks/:task', tasks.delete);
-
-// ERROR HANDLING MIDDLEWARE
-api.use(function (err, req, res, next) {
-	console.log('//-----------------Error-----------------//');
-	console.error(err);
-	console.log('^-----------------------------------------^');
-	//TODO email the admins
-	//TODO get more creative here.
-	var status = err.status || 500;
-	res.status(status).send('Something broke!');
-});
-
-// ADMIN
-
-app.get('/admin', function (req, res) {});
-
-app.use('/api', api);
 
 };//END MODULE

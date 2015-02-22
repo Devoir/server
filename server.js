@@ -99,6 +99,6 @@ process.on('uncaughtException', function (err) {
 
 	if (config.isLiveSite()) {
 		//Send an email to the admins.
-		AdminEmails.error(err, function () {});
+		// AdminEmails.error(err, function () {});
 	}
 });

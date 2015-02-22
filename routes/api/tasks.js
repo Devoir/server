@@ -14,11 +14,9 @@ exports.create = function (req, res, next) {
 
 exports.importFromFeed = function (req, res, next) {
 	var url = req.body.icalFeed;
-	if (!url) {
-		var err = new Error('icalFeed not provided');
-		err.status = 400;
-		return ApiError.handle(err, next);
-	}
+
+	if (!url)
+		return ApiError.handle(new Error('ical Feed not provided'), next, 400);
 
 	// import ical feed
 	ical.fromURL(url, {}, function(err, data) {
