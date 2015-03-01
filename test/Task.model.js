@@ -12,6 +12,8 @@ describe('Task', function () {
 	var newTaskId;
 	var newTaskId2;
 	var newTaskId3;
+	var dateString = '2015/01/01';
+	var dateObject = new Date("January 1, 2015 00:00:00");
 
 	before(function(done) {
 		var user = {
@@ -78,12 +80,12 @@ describe('Task', function () {
 			var data = {
 				name: 'homework1',
 				description: 'boring stuff',
-				start_date: '2015-01-01',
-				end_date: '2015-01-01',
+				start_date: dateString,
+				end_date: dateString,
 				complete: false,
 				visible: false,
-				user_last_updated: '2015-01-01',
-				ical_last_updated: '2015-01-01',
+				user_last_updated: dateString,
+				ical_last_updated: dateString,
 				course_id: -1
 			};
 
@@ -98,12 +100,12 @@ describe('Task', function () {
 			var data = {
 				name: 'homework1',
 				description: 'boring stuff',
-				start_date: '2015-01-01',
-				end_date: '2015-01-01',
+				start_date: dateString,
+				end_date: dateString,
 				complete: false,
 				visible: false,
-				user_last_updated: '2015-01-01',
-				ical_last_updated: '2015-01-01',
+				user_last_updated: dateString,
+				ical_last_updated: dateString,
 				course_id: newCourseId
 			};
 
@@ -121,12 +123,12 @@ describe('Task', function () {
 			var data = {
 				name: 'homework2',
 				description: 'boring stuff',
-				start_date: '2015-01-01',
-				end_date: '2015-01-01',
-				complete: false,
-				visible: false,
-				user_last_updated: '2015-01-01',
-				ical_last_updated: '2015-01-01',
+				start_date: dateString,
+				end_date: dateString,
+				complete: true,
+				visible: true,
+				user_last_updated: dateString,
+				ical_last_updated: dateString,
 				course_id: newCourseId
 			};
 
@@ -144,12 +146,12 @@ describe('Task', function () {
 			var data = {
 				name: 'homework3',
 				description: 'boring stuff',
-				start_date: '2015-01-01',
-				end_date: '2015-01-01',
-				complete: false,
+				start_date: dateString,
+				end_date: dateString,
+				complete: true,
 				visible: false,
-				user_last_updated: '2015-01-01',
-				ical_last_updated: '2015-01-01',
+				user_last_updated: dateString,
+				ical_last_updated: dateString,
 				course_id: newCourseId2
 			};
 
@@ -163,54 +165,70 @@ describe('Task', function () {
 		});
 	});
 
-	/*describe('getById', function () {
+	describe('getById', function () {
 		it ('should return null', function (done) {
 
-			Course.getById(-1, function(err, course) {
+			Task.getById(-1, function(err, course) {
 				assert.isNull(err, 'Error: ' + err);
-				assert.isNull(course, 'No course should have been returned')
+				assert.isNull(course, 'No task should have been returned')
 				done();
 			});
 		});
 
-		it ('should select the first course inserted', function (done) {
+		it ('should select the first task inserted', function (done) {
 
 			var expectedResult = {
-				name: 'CS 428',
-				color: '#cccccc',
-				visible: true,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId
-			};
-
-			Course.getById(newCourseId, function(err, course) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(course.name, expectedResult.name, 'Incorrect name');
-				assert.equal(course.color, expectedResult.color, 'Incorrect color');
-				assert.equal(course.visible, expectedResult.visible, 'Incorrect visible');
-				assert.equal(course.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
-				assert.equal(course.user_id, expectedResult.user_id, 'Incorrect user id');
-				done();
-			});
-		});
-
-		it ('should select the second course inserted', function (done) {
-
-			var expectedResult = {
-				name: 'CS 498R',
-				color: '#cccccc',
+				name: 'homework1',
+				description: 'boring stuff',
+				start_date: dateObject,
+				end_date: dateObject,
+				complete: false,
 				visible: false,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId
+				user_last_updated: dateObject,
+				ical_last_updated: dateObject,
+				course_id: newCourseId
 			};
 
-			Course.getById(newCourseId2, function(err, course) {
+			Task.getById(newTaskId, function(err, task) {
 				assert.isNull(err, 'Error: ' + err);
-				assert.equal(course.name, expectedResult.name, 'Incorrect name');
-				assert.equal(course.color, expectedResult.color, 'Incorrect color');
-				assert.equal(course.visible, expectedResult.visible, 'Incorrect visible');
-				assert.equal(course.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
-				assert.equal(course.user_id, expectedResult.user_id, 'Incorrect user id');
+				assert.equal(task.name, expectedResult.name, 'Incorrect name');
+				assert.equal(task.description, expectedResult.description, 'Incorrect description');
+				assert.equal(task.start_date.getTime(), expectedResult.start_date.getTime(), 'Incorrect start date');
+				assert.equal(task.end_date.getTime(), expectedResult.end_date.getTime(), 'Incorrect end date');
+				assert.equal(task.complete, expectedResult.complete, 'Incorrect complete');
+				assert.equal(task.visible, expectedResult.visible, 'Incorrect visible');
+				assert.equal(task.user_last_updated.getTime(), expectedResult.user_last_updated.getTime(), 'Incorrect user last updated');
+				assert.equal(task.ical_last_updated.getTime(), expectedResult.ical_last_updated.getTime(), 'Incorrect ical last updated');
+				assert.equal(task.course_id, expectedResult.course_id, 'Incorrect course id');
+				done();
+			});
+		});
+
+		it ('should select the second task inserted', function (done) {
+
+			var expectedResult = {
+				name: 'homework2',
+				description: 'boring stuff',
+				start_date: dateObject,
+				end_date: dateObject,
+				complete: true,
+				visible: true,
+				user_last_updated: dateObject,
+				ical_last_updated: dateObject,
+				course_id: newCourseId
+			};
+
+			Task.getById(newTaskId2, function(err, task) {
+				assert.isNull(err, 'Error: ' + err);
+				assert.equal(task.name, expectedResult.name, 'Incorrect name');
+				assert.equal(task.description, expectedResult.description, 'Incorrect description');
+				assert.equal(task.start_date.getTime(), expectedResult.start_date.getTime(), 'Incorrect start date');
+				assert.equal(task.end_date.getTime(), expectedResult.end_date.getTime(), 'Incorrect end date');
+				assert.equal(task.complete, expectedResult.complete, 'Incorrect complete');
+				assert.equal(task.visible, expectedResult.visible, 'Incorrect visible');
+				assert.equal(task.user_last_updated.getTime(), expectedResult.user_last_updated.getTime(), 'Incorrect user last updated');
+				assert.equal(task.ical_last_updated.getTime(), expectedResult.ical_last_updated.getTime(), 'Incorrect ical last updated');
+				assert.equal(task.course_id, expectedResult.course_id, 'Incorrect course id');
 				done();
 			});
 		});
@@ -218,24 +236,32 @@ describe('Task', function () {
 		it ('should select the third course inserted', function (done) {
 
 			var expectedResult = {
-				name: 'CS 5000',
-				color: '#cccccc',
+				name: 'homework3',
+				description: 'boring stuff',
+				start_date: dateObject,
+				end_date: dateObject,
+				complete: true,
 				visible: false,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId2
+				user_last_updated: dateObject,
+				ical_last_updated: dateObject,
+				course_id: newCourseId2
 			};
 
-			Course.getById(newCourseId3, function(err, course) {
+			Task.getById(newTaskId3, function(err, task) {
 				assert.isNull(err, 'Error: ' + err);
-				assert.equal(course.name, expectedResult.name, 'Incorrect name');
-				assert.equal(course.color, expectedResult.color, 'Incorrect color');
-				assert.equal(course.visible, expectedResult.visible, 'Incorrect visible');
-				assert.equal(course.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
-				assert.equal(course.user_id, expectedResult.user_id, 'Incorrect user id');
+				assert.equal(task.name, expectedResult.name, 'Incorrect name');
+				assert.equal(task.description, expectedResult.description, 'Incorrect description');
+				assert.equal(task.start_date.getTime(), expectedResult.start_date.getTime(), 'Incorrect start date');
+				assert.equal(task.end_date.getTime(), expectedResult.end_date.getTime(), 'Incorrect end date');
+				assert.equal(task.complete, expectedResult.complete, 'Incorrect complete');
+				assert.equal(task.visible, expectedResult.visible, 'Incorrect visible');
+				assert.equal(task.user_last_updated.getTime(), expectedResult.user_last_updated.getTime(), 'Incorrect user last updated');
+				assert.equal(task.ical_last_updated.getTime(), expectedResult.ical_last_updated.getTime(), 'Incorrect ical last updated');
+				assert.equal(task.course_id, expectedResult.course_id, 'Incorrect course id');
 				done();
 			});
 		});
-	});*/
+	});
 
 	/*describe('getByUserId', function () {
 		it ('should select all courses for the specified user', function (done) {
