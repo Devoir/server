@@ -27,7 +27,7 @@ describe('User', function () {
 			var data = {
 				email: 'testa@email.com',
 				display_name: 'A Test'
-			}
+			};
 
 			User.create(data, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
@@ -43,7 +43,7 @@ describe('User', function () {
 			var data = {
 				email: 'testb@email.com',
 				display_name: 'Bert Test'
-			}
+			};
 
 			User.create(data, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
@@ -71,7 +71,7 @@ describe('User', function () {
 				id: newUserId,
 				email: 'testa@email.com',
 				display_name: 'A Test'
-			}
+			};
 
 			User.getById(newUserId, function(err, user) {
 				assert.isNull(err, 'Error: ' + err);
@@ -88,7 +88,7 @@ describe('User', function () {
 				id: newUserId2,
 				email: 'testb@email.com',
 				display_name: 'Bert Test'
-			}
+			};
 
 			User.getById(newUserId2, function(err, user) {
 				assert.isNull(err, 'Error: ' + err);
@@ -116,7 +116,7 @@ describe('User', function () {
 				id: newUserId,
 				email: 'testa@email.com',
 				display_name: 'A Test'
-			}
+			};
 
 			User.getByEmail('testa@email.com', function(err, user) {
 				assert.isNull(err, 'Error: ' + err);
@@ -133,7 +133,7 @@ describe('User', function () {
 				id: newUserId2,
 				email: 'testb@email.com',
 				display_name: 'Bert Test'
-			}
+			};
 
 			User.getByEmail('testb@email.com', function(err, user) {
 				assert.isNull(err, 'Error: ' + err);
