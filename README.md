@@ -6,14 +6,14 @@ To run the server make sure you have **node** and **npm** (node package manager)
 
 Next you will need to set up your DB    
 1. install postgres    
-2. create a user 'postgres'    
+2. create a user 'test'    
 3. create a db named devoir   
 4. create the tables with the create statements from our design doc
     
     $ createuser --interactive    
-    #Enter name of role to add: postgres
+    #Enter name of role to add: test
     #Shall the new role be a superuser? y
-    $ createdb devoir    
+    $ createdb devoirtest    
 
     #run postgres in another tab
     $ postgres -D /usr/local/var/postgres
