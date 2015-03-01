@@ -100,6 +100,51 @@ describe('User', function () {
 		});
 	});
 
+	describe('getByEmail', function () {
+		it ('should return null', function (done) {
+
+			User.getByEmail('blah@email.com', function(err, user) {
+				assert.isNull(err, 'Error: ' + err);
+				assert.isNull(user, 'No user should have been returned')
+				done();
+			});
+		});
+
+		it ('should select the first user inserted', function (done) {
+
+			var expectedResult = {
+				id: newUserId,
+				email: 'testa@email.com',
+				display_name: 'A Test'
+			}
+
+			User.getByEmail('testa@email.com', function(err, user) {
+				assert.isNull(err, 'Error: ' + err);
+				assert.equal(user.id, expectedResult.id, 'Incorrect id');
+				assert.equal(user.email, expectedResult.email, 'Incorrect email');
+				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
+				done();
+			});
+		});
+
+		it ('should select the second user inserted', function (done) {
+
+			var expectedResult = {
+				id: newUserId2,
+				email: 'testb@email.com',
+				display_name: 'Bert Test'
+			}
+
+			User.getByEmail('testb@email.com', function(err, user) {
+				assert.isNull(err, 'Error: ' + err);
+				assert.equal(user.id, expectedResult.id, 'Incorrect id');
+				assert.equal(user.email, expectedResult.email, 'Incorrect email');
+				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
+				done();
+			});
+		});
+	});
+
 	describe('getAll', function () {
 		it ('should select all users', function (done) {
 

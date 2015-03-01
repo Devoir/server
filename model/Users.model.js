@@ -11,8 +11,11 @@ var UserPrototype = {
 	// user factory
 	User = function (data) {
 		var user = Object.create(UserPrototype);
-		for (var key in data)
+
+		for (var key in data) {
 			user[key] = data[key];
+		}
+
 		return user;
 	};
 
@@ -34,10 +37,12 @@ exports.getById = function (id, callback) {
 
 exports.getByEmail = function (email, callback) {
 	db.query('SELECT * FROM users WHERE email = $1', [email], function(err, rows) {
-		if (err) return callback(err);
+		
+		if (err) {
+			return callback(err);
+		}
 
 		var user = (rows.length) ? User(rows[0]) : null;
-
 		callback(null, user);
 	});
 };
@@ -61,8 +66,7 @@ exports.create = function (data, callback) {
 
 	var q = 'INSERT INTO users (email, display_name) VALUES ( $1, $2 ) RETURNING id';
 
-	//TODO
-	//if no email or displayName return an error
+	//TODO: validate data
 
 	var values = [data.email, data.display_name];
 	db.query(q, values, function (err, result) {
