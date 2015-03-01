@@ -1,18 +1,6 @@
-var assert = require("assert");
-
+var assert = require("chai").assert;
 var db = require('../library/Database.js');
-
 var User = require('../model/Users.model.js');
-
-
-describe('Array', function(){
-	describe('#indexOf()', function(){
-		it('should return -1 when the value is not present', function(){
-			assert.equal(-1, [1,2,3].indexOf(5));
-			assert.equal(-1, [1,2,3].indexOf(0));
-		});
-	});
-});
 
 describe('Database', function () {
 	describe('getClient', function () {
@@ -21,7 +9,6 @@ describe('Database', function () {
 				assert(!err, err);
 				assert(client);
 
-				console.log('\n', client);
 				client.end();
 				done();
 			});
@@ -31,58 +18,183 @@ describe('Database', function () {
 
 describe('User', function () {
 
-
 	var newUserId;
+	var newUserId2;
 
 	describe('create', function() {
-		it ('should create a user named', function(done) {
+		it ('should create a user', function(done) {
 
 			var data = {
-				email: 'fake@email.com',
-				displayName: 'fake_user'
+				email: 'testa@email.com',
+				display_name: 'A Test'
 			}
 
-			User.create(data, function(err, newUser) {
-				assert(!err, err);
+			User.create(data, function(err, result) {
+				assert.isNull(err, 'Error: ' + err);
+				assert(result.id, 'Should have gotten back an id');
 
-				assert(newUser.id, 'we did not get back an id');
-				
-				newUserId = newUser.id;
-				console.log('\n', newUser);
+				newUserId = result.id;
 				done();
-			})
+			});
 		});
-	});
 
-	describe('getById', function () {
-		it ('should select one default user in the DB', function (done) {
+		it ('should create another user', function(done) {
 
-			User.getById(newUserId, function(err, user) {
-				assert(!err, err);
-				console.log('\n', user);
+			var data = {
+				email: 'testb@email.com',
+				display_name: 'Bert Test'
+			}
+
+			User.create(data, function(err, result) {
+				assert.isNull(err, 'Error: ' + err);
+				assert(result.id, 'Should have gotten back an id');
+
+				newUserId2 = result.id;
 				done();
 			});
 		});
 	});
 
-	describe('delete', function() {
-		it ('should delete a user', function (done) {
+	describe('getById', function () {
+		it ('should return null', function (done) {
 
-			User.delete(newUserId, function(err, result) {
-				assert(!err, err);
-				console.log(result);
+			User.getById(-1, function(err, user) {
+				assert.isNull(err, 'Error: ' + err);
+				assert.isNull(user, 'No user should have been returned')
 				done();
-			})
+			});
 		});
-	})
+
+		it ('should select the first user inserted', function (done) {
+
+			var expectedResult = {
+				id: newUserId,
+				email: 'testa@email.com',
+				display_name: 'A Test'
+			}
+
+			User.getById(newUserId, function(err, user) {
+				assert.isNull(err, 'Error: ' + err);
+				assert.equal(user.id, expectedResult.id, 'Incorrect id');
+				assert.equal(user.email, expectedResult.email, 'Incorrect email');
+				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
+				done();
+			});
+		});
+
+		it ('should select the second user inserted', function (done) {
+
+			var expectedResult = {
+				id: newUserId2,
+				email: 'testb@email.com',
+				display_name: 'Bert Test'
+			}
+
+			User.getById(newUserId2, function(err, user) {
+				assert.isNull(err, 'Error: ' + err);
+				assert.equal(user.id, expectedResult.id, 'Incorrect id');
+				assert.equal(user.email, expectedResult.email, 'Incorrect email');
+				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
+				done();
+			});
+		});
+	});
 
 	describe('getAll', function () {
-		it ('should select all users from users table', function (done) {
+		it ('should select all users', function (done) {
+
+			var expectedResult = [];
+			expectedResult.push({id: newUserId, email: 'testa@email.com', display_name: 'A Test'});
+			expectedResult.push({id: newUserId2, email: 'testb@email.com', display_name: 'Bert Test'});
 
 			User.getAll(function(err, users) {
-				assert(!err, err);
-				console.log('\n', users);
+				assert.isNull(err, 'Error: ' + err);
+				assert.equal(users.length, expectedResult.length, 'Incorrect number of users returned');
+
+				assert.equal(users[0].id, expectedResult[0].id, 'Incorrect id for first user');
+				assert.equal(users[0].email, expectedResult[0].email, 'Incorrect email for first user');
+				assert.equal(users[0].display_name, expectedResult[0].display_name, 'Incorrect display_name for first user');
+
+				assert.equal(users[1].id, expectedResult[1].id, 'Incorrect id for second user');
+				assert.equal(users[1].email, expectedResult[1].email, 'Incorrect email for second user');
+				assert.equal(users[1].display_name, expectedResult[1].display_name, 'Incorrect display_name for second user');
+
 				done();
+			});
+		});
+	});
+
+	describe('update', function () {
+		it ('should update the first user', function (done) {
+
+			var data = {
+				id: newUserId,
+				email: 'updatetesta@email.com',
+				display_name: 'Update A Test'
+			};
+
+			User.update(data, function(err, result) {
+				assert.isNull(err, 'Error: ' + err);
+
+				var expectedResult = data;
+
+				User.getById(newUserId, function(err, user) {
+					assert.isNull(err, 'Error: ' + err);
+					assert.equal(user.id, expectedResult.id, 'Incorrect id');
+					assert.equal(user.email, expectedResult.email, 'Incorrect email');
+					assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
+					done();
+				});
+			});
+		});
+
+		it ('should update the second user', function (done) {
+
+			var data = {
+				id: newUserId2,
+				email: 'updatetestb@email.com',
+				display_name: 'Update Bert Test'
+			};
+
+			User.update(data, function(err, result) {
+				assert.isNull(err, 'Error: ' + err);
+
+				var expectedResult = data;
+
+				User.getById(newUserId2, function(err, user) {
+					assert.isNull(err, 'Error: ' + err);
+					assert.equal(user.id, expectedResult.id, 'Incorrect id');
+					assert.equal(user.email, expectedResult.email, 'Incorrect email');
+					assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
+					done();
+				});
+			});
+		});
+	});
+
+	describe('delete', function() {
+		it ('should delete the first user', function (done) {
+			User.delete(newUserId, function(err, result) {
+				assert.isNull(err, 'Error: ' + err);
+				
+				User.getById(newUserId, function(err, user) {
+					assert.isNull(err, 'Error: ' + err);
+					assert.isNull(user, 'First user was not deleted')
+					done();
+				});
+			});
+		});
+
+		it ('should delete the second user', function (done) {
+
+			User.delete(newUserId2, function(err, result) {
+				assert.isNull(err, 'Error: ' + err);
+				
+				User.getById(newUserId2, function(err, user) {
+					assert.isNull(err, 'Error: ' + err);
+					assert.isNull(user, 'Second user was not deleted')
+					done();
+				});
 			});
 		});
 	});
