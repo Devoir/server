@@ -90,7 +90,7 @@ exports.create = function (data, callback) {
 	});
 };
 
-exports.update = function(id, callback) {
+exports.update = function(data, callback) {
 	var query = 'UPDATE tasks SET name = $1, description = $2, start_date = $3, end_date = $4, complete = $5, visible = $6, user_last_updated = $7, ical_last_updated = $8, course_id = $9 WHERE id = $10';
 	var values = [data.name, data.description, data.start_date, data.end_date, data.complete, data.visible, data.user_last_updated, data.ical_last_updated, data.course_id, data.id];
 	db.query(query, values, callback);
