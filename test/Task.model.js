@@ -1,128 +1,169 @@
 var assert = require("chai").assert;
 var db = require('../library/Database.js');
+var Task = require('../model/Tasks.model.js');
 var Course = require('../model/Courses.model.js');
 var User = require('../model/Users.model.js');
 
-describe('Course', function () {
+describe('Task', function () {
 
 	var newUserId;
-	var newUserId2;
 	var newCourseId;
 	var newCourseId2;
-	var newCourseId3;
+	var newTaskId;
+	var newTaskId2;
+	var newTaskId3;
 
 	before(function(done) {
-		var user1 = {
-			email: 'testc@email.com',
-			display_name: 'Test C'
-		}
+		var user = {
+			email: 'teste@email.com',
+			display_name: 'Test E'
+		};
 
-		var user2 = {
-			email: 'testd@email.com',
-			display_name: 'Test D'
-		}
-
-		User.create(user1, function(err, result) {
+		User.create(user, function(err, result) {
 			assert.isNull(err, 'Error: ' + err);
 			assert(result.id, 'Should have gotten back an id');
 			newUserId = result.id;
 
-			User.create(user2, function(err, result) {
+			var course1 = {
+				name: 'CS 4000',
+				color: '#cccccc',
+				visible: true,
+				ical_feed_url: "http://ical.com",
+				user_id: newUserId
+			};
+
+			var course2 = {
+				name: 'CS 5000',
+				color: '#cccccc',
+				visible: true,
+				ical_feed_url: "http://ical.com",
+				user_id: newUserId
+			};
+
+			Course.create(course1, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
 				assert(result.id, 'Should have gotten back an id');
-				newUserId2 = result.id;
-				done();
+				newCourseId = result.id;
+
+				Course.create(course2, function(err, result) {
+					assert.isNull(err, 'Error: ' + err);
+					assert(result.id, 'Should have gotten back an id');
+					newCourseId2 = result.id;
+
+					done();
+				});
 			});
 		});
 	});
 
 	after(function(done) {
-		User.delete(newUserId, function(err, result) {
+		Course.delete(newCourseId, function(err, result) {
 			assert.isNull(err, 'Error: ' + err);
 
-			User.delete(newUserId2, function(err, result) {
+			Course.delete(newCourseId2, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
-				done();
+				
+				User.delete(newUserId, function(err, result) {
+					assert.isNull(err, 'Error: ' + err);
+					
+					done();
+				});
 			});
 		});
 	});
 
 	describe('create', function() {
-		it ('should fail creating a course with invalid user', function(done) {
+		it ('should fail creating a task with invalid course', function(done) {
 
 			var data = {
-				name: 'Invalid User - Should Fail',
-				color: '#cccccc',
-				visible: true,
-				ical_feed_url: "http://ical.com",
-				user_id: -1
+				name: 'homework1',
+				description: 'boring stuff',
+				start_date: '2015-01-01',
+				end_date: '2015-01-01',
+				complete: false,
+				visible: false,
+				user_last_updated: '2015-01-01',
+				ical_last_updated: '2015-01-01',
+				course_id: -1
 			};
 
-			Course.create(data, function(err, result) {
+			Task.create(data, function(err, result) {
 				assert.isNotNull(err, 'Error: ' + err);
 				done();
 			});
 		});
 
-		it ('should create a course', function(done) {
+		it ('should create a task', function(done) {
 
 			var data = {
-				name: 'CS 428',
-				color: '#cccccc',
-				visible: true,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId
+				name: 'homework1',
+				description: 'boring stuff',
+				start_date: '2015-01-01',
+				end_date: '2015-01-01',
+				complete: false,
+				visible: false,
+				user_last_updated: '2015-01-01',
+				ical_last_updated: '2015-01-01',
+				course_id: newCourseId
 			};
 
-			Course.create(data, function(err, result) {
+			Task.create(data, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
 				assert(result.id, 'Should have gotten back an id');
 
-				newCourseId = result.id;
+				newTaskId = result.id;
 				done();
 			});
 		});
 
-		it ('should create a second course', function(done) {
+		it ('should create a second task', function(done) {
 
 			var data = {
-				name: 'CS 498R',
-				color: '#cccccc',
+				name: 'homework2',
+				description: 'boring stuff',
+				start_date: '2015-01-01',
+				end_date: '2015-01-01',
+				complete: false,
 				visible: false,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId
+				user_last_updated: '2015-01-01',
+				ical_last_updated: '2015-01-01',
+				course_id: newCourseId
 			};
 
-			Course.create(data, function(err, result) {
+			Task.create(data, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
 				assert(result.id, 'Should have gotten back an id');
 
-				newCourseId2 = result.id;
+				newTaskId2 = result.id;
 				done();
 			});
 		});
 
-		it ('should create a third course', function(done) {
+		it ('should create a third task', function(done) {
 
 			var data = {
-				name: 'CS 5000',
-				color: '#cccccc',
+				name: 'homework3',
+				description: 'boring stuff',
+				start_date: '2015-01-01',
+				end_date: '2015-01-01',
+				complete: false,
 				visible: false,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId2
+				user_last_updated: '2015-01-01',
+				ical_last_updated: '2015-01-01',
+				course_id: newCourseId2
 			};
 
-			Course.create(data, function(err, result) {
+			Task.create(data, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
 				assert(result.id, 'Should have gotten back an id');
 				
-				newCourseId3 = result.id;
+				newTaskId3 = result.id;
 				done();
 			});
 		});
 	});
 
-	describe('getById', function () {
+	/*describe('getById', function () {
 		it ('should return null', function (done) {
 
 			Course.getById(-1, function(err, course) {
@@ -194,9 +235,9 @@ describe('Course', function () {
 				done();
 			});
 		});
-	});
+	});*/
 
-	describe('getByUserId', function () {
+	/*describe('getByUserId', function () {
 		it ('should select all courses for the specified user', function (done) {
 
 			var expectedResult = [];
@@ -240,9 +281,9 @@ describe('Course', function () {
 				done();
 			});
 		});
-	});
+	});*/
 
-	describe('getAll', function () {
+	/*describe('getAll', function () {
 		it ('should select all courses', function (done) {
 
 			var expectedResult = [];
@@ -302,9 +343,9 @@ describe('Course', function () {
 				done();
 			});
 		});
-	});
+	});*/
 
-	describe('update', function () {
+	/*describe('update', function () {
 		it ('should update the first course', function (done) {
 
 			var data = {
@@ -391,42 +432,42 @@ describe('Course', function () {
 				});
 			});
 		});
-	});
+	});*/
 
 	describe('delete', function() {
-		it ('should delete the first course', function (done) {
-			Course.delete(newCourseId, function(err, result) {
+		it ('should delete the first task', function (done) {
+			Task.delete(newTaskId, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
 				
-				Course.getById(newCourseId, function(err, course) {
+				Task.getById(newTaskId, function(err, task) {
 					assert.isNull(err, 'Error: ' + err);
-					assert.isNull(course, 'First course was not deleted')
+					assert.isNull(task, 'First task was not deleted')
 					done();
 				});
 			});
 		});
 
-		it ('should delete the second course', function (done) {
+		it ('should delete the second task', function (done) {
 
-			Course.delete(newCourseId2, function(err, result) {
+			Task.delete(newTaskId2, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
 				
-				Course.getById(newCourseId2, function(err, course) {
+				Task.getById(newTaskId2, function(err, task) {
 					assert.isNull(err, 'Error: ' + err);
-					assert.isNull(course, 'Second course was not deleted')
+					assert.isNull(task, 'Second task was not deleted')
 					done();
 				});
 			});
 		});
 
-		it ('should delete the third course', function (done) {
+		it ('should delete the third task', function (done) {
 
-			Course.delete(newCourseId3, function(err, result) {
+			Task.delete(newTaskId3, function(err, result) {
 				assert.isNull(err, 'Error: ' + err);
 				
-				Course.getById(newCourseId3, function(err, course) {
+				Task.getById(newTaskId3, function(err, task) {
 					assert.isNull(err, 'Error: ' + err);
-					assert.isNull(course, 'Third course was not deleted')
+					assert.isNull(task, 'Third task was not deleted')
 					done();
 				});
 			});
