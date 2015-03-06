@@ -15,13 +15,6 @@ if (process.env.NODE_ENV == "dev") {
 	Config.homeUrl = "http://localhost:3000";
 	Config.dbUrl = "postgres://test:t3stm3@localhost:5432/devoirtest";
 
-	/*Config.db = {
-		host: "localhost:5432",
-		name: "devoir",
-		user: "dev",
-		password: "m3d3v"
-	};*/
-
 } else {
 
 	Config.environment = "production";
