@@ -1,27 +1,24 @@
 var config = require('../config.js');
-var Client = require('pg-native');
+var pg = require('pg').native;
 
 var connectionString = config.dbUrl;
 
-exports.getClient = getClient;
+exports.query = function (queryString, params, callback) {
 
-exports.query = function (q, params, callback) {
-	getClient(function(err, client) {
-		if (err) return callback(err);
+	pg.connect(connectionString, function(err, client, done) {
+	
+		if (err) {
+			return callback(err);
+		}
 
-		client.query(q, params, function(err, rows) {
+		client.query(queryString, params, function(err, result) {
 			
-			callback(err, rows);
-			//close up
-			client.end();
+			if (err) {
+				return callback(err);
+			}
+
+			callback(err, result.rows);
+			done();
 		});
 	});
 }
-
-function getClient (callback) {
-	var client = new Client();
-	client.connect(connectionString, function(err) {
-
-		callback(err, client);
-	});
-};
