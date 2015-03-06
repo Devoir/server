@@ -16,7 +16,14 @@ var CoursePrototype = {
 	};
 
 exports.getById = function (id, callback) {
-	db.query('SELECT * FROM courses WHERE id = $1', [id], function(err, rows) {
+
+	var query = {
+		name: 'Courses getById',
+		text: 'SELECT * FROM courses WHERE id = $1',
+		values: [id]
+	}
+
+	db.preparedQuery(query, function(err, rows) {
 
 		if (err) {
 			return callback(err);
@@ -28,7 +35,14 @@ exports.getById = function (id, callback) {
 };
 
 exports.getByUserId = function (user_id, callback) {
-	db.query('SELECT * FROM courses WHERE user_id = $1', [user_id], function(err, rows) {
+
+	var query = {
+		name: 'Courses getByUserId',
+		text: 'SELECT * FROM courses WHERE user_id = $1',
+		values: [user_id]
+	}
+
+	db.preparedQuery(query, function(err, rows) {
 		
 		if (err) {
 			return callback(err);
@@ -43,7 +57,8 @@ exports.getByUserId = function (user_id, callback) {
 };
 
 exports.getAll = function (callback) {
-	db.query('SELECT * FROM courses', [], function(err, rows) {
+	
+	db.query('SELECT * FROM courses', function(err, rows) {
 		
 		if (err) {
 			return callback(err);
@@ -61,10 +76,13 @@ exports.create = function (data, callback) {
 
 	//TODO: validate data
 	
-	var q = 'INSERT INTO courses (name, color, visible, ical_feed_url, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id';
-	var values = [data.name, data.color, data.visible, data.ical_feed_url, data.user_id];
+	var query = {
+		name: 'Courses create',
+		text: 'INSERT INTO courses (name, color, visible, ical_feed_url, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+		values: [data.name, data.color, data.visible, data.ical_feed_url, data.user_id]
+	}
 	
-	db.query(q, values, function (err, result) {
+	db.preparedQuery(query, function (err, result) {
 
 		if (err) {
 			return callback(err);
@@ -75,12 +93,23 @@ exports.create = function (data, callback) {
 };
 
 exports.update = function(data, callback) {
-	var query = 'UPDATE courses SET name = $1, color = $2, visible = $3, ical_feed_url = $4, user_id = $5 WHERE id = $6';
-	var values = [data.name, data.color, data.visible, data.ical_feed_url, data.user_id, data.id];
-	db.query(query, values, callback);
+
+	var query = {
+		name: 'Courses update',
+		text: 'UPDATE courses SET name = $1, color = $2, visible = $3, ical_feed_url = $4, user_id = $5 WHERE id = $6',
+		values: [data.name, data.color, data.visible, data.ical_feed_url, data.user_id, data.id]
+	}
+
+	db.preparedQuery(query, callback);
 };
 
 exports.delete = function (id, callback) {
-	var query = 'DELETE FROM courses WHERE id = $1';
-	db.query(query, [id], callback);
+
+	var query = {
+		name: 'Courses delete',
+		text: 'DELETE FROM courses WHERE id = $1',
+		values: [id]
+	}
+
+	db.preparedQuery(query, callback);
 };

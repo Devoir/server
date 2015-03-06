@@ -24,7 +24,14 @@ var UserPrototype = {
 ////////////////
 
 exports.getById = function (id, callback) {
-	db.query('SELECT * FROM users WHERE id = $1', [id], function(err, rows) {
+
+	var query = {
+		name: 'Users getById',
+		text: 'SELECT * FROM users WHERE id = $1',
+		values: [id]
+	}
+
+	db.preparedQuery(query, function(err, rows) {
 
 		if (err) {
 			return callback(err);
@@ -36,8 +43,15 @@ exports.getById = function (id, callback) {
 };
 
 exports.getByEmail = function (email, callback) {
-	db.query('SELECT * FROM users WHERE email = $1', [email], function(err, rows) {
-		
+
+	var query = {
+		name: 'Users getByEmail',
+		text: 'SELECT * FROM users WHERE email = $1',
+		values: [email]
+	}
+	
+	db.preparedQuery(query, function(err, rows) {
+
 		if (err) {
 			return callback(err);
 		}
@@ -48,8 +62,9 @@ exports.getByEmail = function (email, callback) {
 };
 
 exports.getAll = function (callback) {
-	db.query('SELECT * FROM users', [], function(err, rows) {
-		
+	
+	db.query('SELECT * FROM users', function(err, rows) {
+
 		if (err) {
 			return callback(err);
 		}
@@ -64,12 +79,15 @@ exports.getAll = function (callback) {
 
 exports.create = function (data, callback) {
 
-	var q = 'INSERT INTO users (email, display_name) VALUES ( $1, $2 ) RETURNING id';
-
 	//TODO: validate data
 
-	var values = [data.email, data.display_name];
-	db.query(q, values, function (err, result) {
+	var query = {
+		name: 'Users create',
+		text: 'INSERT INTO users (email, display_name) VALUES ( $1, $2 ) RETURNING id',
+		values: [data.email, data.display_name]
+	}
+
+	db.preparedQuery(query, function (err, result) {
 
 		if (err) {
 			return callback(err);
@@ -80,11 +98,23 @@ exports.create = function (data, callback) {
 };
 
 exports.update = function(data, callback) {
-	var q = 'UPDATE users SET email = $1, display_name = $2 WHERE id = $3';
-	db.query(q, [data.email, data.display_name, data.id], callback);
+
+	var query = {
+		name: 'Users update',
+		text: 'UPDATE users SET email = $1, display_name = $2 WHERE id = $3',
+		values: [data.email, data.display_name, data.id]
+	}
+
+	db.preparedQuery(query, callback);
 };
 
 exports.delete = function (id, callback) {
-	var q = 'DELETE FROM users WHERE id = $1';
-	db.query(q, [id], callback);
+
+	var query = {
+		name: 'Users delete',
+		text: 'DELETE FROM users WHERE id = $1',
+		values: [id]
+	}
+
+	db.preparedQuery(query, callback);
 };
