@@ -1,27 +1,21 @@
-var app = angular.module('app', [
-	// 'services',
-	'controllers',
-	// 'directives'
-]);
-var controllers = controllers || angular.module('controllers', ['ui.calendar','ui.bootstrap']);
+/**
+ * calendarDemoApp - 0.9.0
+ */
+angular.module('calendarDemoApp', ['ui.calendar', 'ui.bootstrap']);
 
-//angular.module('MyApp', ['ui.calendar', 'ui.bootstrap']);
-
-controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', '$http', function ($scope, $compile, uiCalendarConfig, $http) {
-	console.log('calendarCtrl loaded');
-
-	var date = new Date();
+function CalendarCtrl($scope,$compile,uiCalendarConfig) {
+    var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
     
-    //$scope.changeTo = 'Hungarian';
-    /* event source that pulls from google.com 
+    $scope.changeTo = 'Hungarian';
+    /* event source that pulls from google.com */
     $scope.eventSource = {
             url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
             className: 'gcal-event',           // an option!
             currentTimezone: 'America/Chicago' // an option!
-    };*/
+    };
     /* event source that contains custom events on the scope */
     $scope.events = [
       {title: 'All Day Event',start: new Date(y, m, 1)},
@@ -31,7 +25,7 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
       {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
     ];
-    /* event source that calls a function on every view switch 
+    /* event source that calls a function on every view switch */
     $scope.eventsF = function (start, end, timezone, callback) {
       var s = new Date(start).getTime() / 1000;
       var e = new Date(end).getTime() / 1000;
@@ -48,21 +42,21 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
           {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
           {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
         ]
-    };*/
+    };
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
         $scope.alertMessage = (date.title + ' was clicked ');
     };
     /* alert on Drop */
-     /*$scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
        $scope.alertMessage = ('Event Droped to make dayDelta ' + delta);
     };
     /* alert on Resize */
-    /*$scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+    $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
        $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
     };
     /* add and removes an event source of choice */
-    /*$scope.addRemoveEventSource = function(sources,source) {
+    $scope.addRemoveEventSource = function(sources,source) {
       var canAdd = 0;
       angular.forEach(sources,function(value, key){
         if(sources[key] === source){
@@ -75,7 +69,7 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       }
     };
     /* add custom event*/
-    /*$scope.addEvent = function() {
+    $scope.addEvent = function() {
       $scope.events.push({
         title: 'Open Sesame',
         start: new Date(y, m, 28),
@@ -84,7 +78,7 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       });
     };
     /* remove event */
-    /*$scope.remove = function(index) {
+    $scope.remove = function(index) {
       $scope.events.splice(index,1);
     };
     /* Change View */
@@ -98,7 +92,7 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       }
     };
      /* Render Tooltip */
-    /*$scope.eventRender = function( event, element, view ) { 
+    $scope.eventRender = function( event, element, view ) { 
         element.attr({'tooltip': event.title,
                      'tooltip-append-to-body': true});
         $compile(element)($scope);
@@ -120,7 +114,7 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       }
     };
 
-    /*$scope.changeLang = function() {
+    $scope.changeLang = function() {
       if($scope.changeTo === 'Hungarian'){
         $scope.uiConfig.calendar.dayNames = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
         $scope.uiConfig.calendar.dayNamesShort = ["Vas", "Hét", "Kedd", "Sze", "Csüt", "Pén", "Szo"];
@@ -132,80 +126,7 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       }
     };
     /* event sources array*/
-    $scope.eventSources = [$scope.events];//, $scope.eventSource, $scope.eventsF];
-    //$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
-}]);
-
-var controllers = controllers || angular.module('controllers', []);
-
-
-controllers.controller('homeCtrl', ['$scope', '$http', function ($scope, $http) {
-	console.log('homeCtrl loaded');
-}]);
-
-var controllers = controllers || angular.module('controllers', []);
-
-
-controllers.controller('taskViewCtrl', ['$scope', '$http', function ($scope, $http) {
-	console.log('taskViewCtrl loaded');
-
-	$scope.calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
-
-	$scope.getCalendar = function () {
-		$scope.loadingFeed = true;
-		$scope.events = [];
-		
-		var courseId = 5;
-
-		$http.post('/api/courses/' + courseId + '/tasks/import', {icalFeed : $scope.calendarId})
-		.success(function(data, status, headers, config) {
-			// this callback will be called asynchronously
-			// when the response is available
-			for (var d in data)
-				$scope.events.push(data[d]);
-			
-			$scope.loadingFeed = false;
-		})
-		.error(function(data, status, headers, config) {
-			// called asynchronously if an error occurs
-			// or server returns response with an error status.
-			$scope.error = {
-				data : data,
-				status : status
-			};
-			$scope.loadingFeed = false;
-		});
-	};
-
-	$scope.checkOff = function (event) {
-		event.done = !event.done;
-	};
-
-
-	//////////////////
-	// TEMP DATA
-	//////////////////
-
-	$scope.courses = [
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-	];
-}]);
+    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+}
+/* EOF */

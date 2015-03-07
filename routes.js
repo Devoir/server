@@ -17,6 +17,7 @@ module.exports = function (app, passport) {
 app.get('/', staticPages.home);
 app.get('/taskview', staticPages.taskView);
 // app.get('/admin', function (req, res) {});
+app.get('/calendar',staticPages.calendar);
 
 
 // AUTHENTICATION

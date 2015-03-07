@@ -1,8 +1,3 @@
-var app = angular.module('app', [
-	// 'services',
-	'controllers',
-	// 'directives'
-]);
 var controllers = controllers || angular.module('controllers', ['ui.calendar','ui.bootstrap']);
 
 //angular.module('MyApp', ['ui.calendar', 'ui.bootstrap']);
@@ -134,78 +129,4 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
     /* event sources array*/
     $scope.eventSources = [$scope.events];//, $scope.eventSource, $scope.eventsF];
     //$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
-}]);
-
-var controllers = controllers || angular.module('controllers', []);
-
-
-controllers.controller('homeCtrl', ['$scope', '$http', function ($scope, $http) {
-	console.log('homeCtrl loaded');
-}]);
-
-var controllers = controllers || angular.module('controllers', []);
-
-
-controllers.controller('taskViewCtrl', ['$scope', '$http', function ($scope, $http) {
-	console.log('taskViewCtrl loaded');
-
-	$scope.calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
-
-	$scope.getCalendar = function () {
-		$scope.loadingFeed = true;
-		$scope.events = [];
-		
-		var courseId = 5;
-
-		$http.post('/api/courses/' + courseId + '/tasks/import', {icalFeed : $scope.calendarId})
-		.success(function(data, status, headers, config) {
-			// this callback will be called asynchronously
-			// when the response is available
-			for (var d in data)
-				$scope.events.push(data[d]);
-			
-			$scope.loadingFeed = false;
-		})
-		.error(function(data, status, headers, config) {
-			// called asynchronously if an error occurs
-			// or server returns response with an error status.
-			$scope.error = {
-				data : data,
-				status : status
-			};
-			$scope.loadingFeed = false;
-		});
-	};
-
-	$scope.checkOff = function (event) {
-		event.done = !event.done;
-	};
-
-
-	//////////////////
-	// TEMP DATA
-	//////////////////
-
-	$scope.courses = [
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-		{
-			name: 'Course',
-			color: '#ccc'
-		},
-	];
 }]);
