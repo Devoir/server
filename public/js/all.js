@@ -7,7 +7,7 @@ var controllers = controllers || angular.module('controllers', ['ui.calendar','u
 
 //angular.module('MyApp', ['ui.calendar', 'ui.bootstrap']);
 
-controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', '$http', function ($scope, $http, $compile, uiCalendarConfig) {
+controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', '$http', function ($scope, $compile, uiCalendarConfig, $http) {
 	console.log('calendarCtrl loaded');
 
 	var date = new Date();
