@@ -14,3 +14,11 @@ exports.taskView = function (req, res) {
 
 	res.render('../templates/pages/taskView.ejs', req.user);
 };
+
+exports.calendar = function (req, res) {
+	console.log('user', req.user);
+	//if (!req.isAuthenticated())
+		//return res.redirect('/');
+
+	res.render('../templates/pages/calendarAttempt.ejs', req.user);
+};

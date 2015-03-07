@@ -1,5 +1,14 @@
 # DEVOIR    
 
+##To get the calendar to work
+
+Go to the ui-calendar-master directory in the public directory
+
+Run:
+	npm install
+	bower install
+	
+after that the full calendar stuff will be installed and usable
 
 ##Run the server
 To run the server make sure you have **node** and **npm** (node package manager) installed.
@@ -44,7 +53,6 @@ Go to the directory and run
     $ node server.js      
     
 Then you can check it out in your browser at http://localhost:3000
-
 
 ##Front end: compile the Less and minify the JS:    
 
