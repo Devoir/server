@@ -33,7 +33,7 @@ module.exports = function (app) {
 	api.post('/courses/', courses.create);
 	api.get('/courses/:course', courses.getOne);
 	api.put('/courses/:course', courses.update);
-	api.delete('/courses/:course', courses.delete);
+	api.delete('/courses/:courseId', courses.delete);
 
 	// TASKS
 
@@ -43,7 +43,7 @@ module.exports = function (app) {
 
 	api.get('/tasks/:task', tasks.getOne);
 	api.put('/tasks/:task', tasks.update);
-	api.delete('/tasks/:task', tasks.delete);
+	api.delete('/tasks/:taskId', tasks.delete);
 
 	// ADMIN
 

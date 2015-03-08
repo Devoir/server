@@ -23,11 +23,21 @@ exports.getOne = function (req, res, next) {
 };
 
 exports.update = function (req, res, next) {
-	
-	res.json({ not: 'implemented'});
+	var data = req.body;
+
+	Course.update(data, function(err, results) {
+		if (err) return ApiError.handle(err, next);
+
+		res.end();
+	});
 };
 
 exports.delete = function (req, res, next) {
+	var id = req.params.courseId;
 	
-	res.json({ not: 'implemented'});
+	Course.delete(id, function (err, results) {
+		if (err) return ApiError.handle(err, next);
+
+		res.end();
+	});
 };

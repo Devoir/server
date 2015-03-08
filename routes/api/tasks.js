@@ -1,6 +1,7 @@
 //Modules
 var ical =		require('ical');
 var ApiError = require('../../library/ApiError.js');
+var Task = require('../../model/Tasks.model.js');
 
 exports.getForCourse = function (req, res, next) {
 
@@ -9,7 +10,13 @@ exports.getForCourse = function (req, res, next) {
 
 exports.create = function (req, res, next) {
 
-	res.json({ not : 'implented'});
+	var data = req.body;
+
+	Task.create(data, function(err, task) {
+		if (err) return ApiError.handle(err, next);
+		
+		res.json(task);
+	});
 };
 
 exports.importFromFeed = function (req, res, next) {
@@ -31,11 +38,21 @@ exports.getOne = function (req, res, next) {
 };
 
 exports.update = function (req, res, next) {
+	var data = req.body;
 
-	res.json({ not : 'implented'});
+	Task.update(data, function(err, results) {
+		if (err) return ApiError.handle(err, next);
+		res.end();
+	});
 };
 
 exports.delete = function (req, res, next) {
 
-	res.json({ not : 'implented'});
+	var id = req.params.taskId;
+	
+	Task.delete(id, function (err, results) {
+		if (err) return ApiError.handle(err, next);
+
+		res.end();
+	});
 };

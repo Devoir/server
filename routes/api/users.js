@@ -1,6 +1,7 @@
 // models
 var User = require('../../model/Users.model.js');
 var ApiError = require('../../library/ApiError.js');
+var User = require('../../model/Users.model.js');
 
 exports.getAllUsers = function (req, res, next) {
 	console.log(req.user, req.params);
@@ -11,11 +12,6 @@ exports.getAllUsers = function (req, res, next) {
 	});
 };
 
-exports.create = function (req, res, next) {
-
-	res.json({ not: 'implemented'});
-};
-
 exports.getOne = function (req, res, next) {
 
 	res.json(req.user);
@@ -23,5 +19,11 @@ exports.getOne = function (req, res, next) {
 
 exports.update = function (req, res, next) {
 
-	res.json({ not: 'implemented'});
+	var data = req.body;
+
+	User.update(data, function(err, results) {
+		if (err) return ApiError.handle(err, next);
+
+		res.end();
+	});
 };
