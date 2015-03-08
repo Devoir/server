@@ -15,7 +15,7 @@ exports.create = function (err, status) {
 		apiError = err;
 	}
 
-	apiError.status = status || 500;
+	apiError.status = apiError.status || status || 500;
 
 	return apiError;
 }

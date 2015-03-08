@@ -1,4 +1,5 @@
 var db = require('../library/Database.js');
+var ModelHelper = require('../library/ModelHelper.js');
 
 var CoursePrototype = {
 		// instance methods
@@ -73,13 +74,20 @@ exports.getAll = function (callback) {
 };
 
 exports.create = function (data, callback) {
+	var names = ['name', 'color', 'visible', 'ical_feed_url', 'user_id'];
 
 	//TODO: validate data
+	var err = ModelHelper.checkForRequiredParams(names, data);
+	if (err) return callback(err);
+
+	var values = names.map(function(name) {
+		return data[name];
+	});
 	
 	var query = {
 		name: 'Courses create',
-		text: 'INSERT INTO courses (name, color, visible, ical_feed_url, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-		values: [data.name, data.color, data.visible, data.ical_feed_url, data.user_id]
+		text: 'INSERT INTO courses (' + names.join(', ') + ') VALUES ($1, $2, $3, $4, $5) RETURNING id',
+		values: values
 	}
 	
 	db.preparedQuery(query, function (err, result) {
