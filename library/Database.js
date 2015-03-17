@@ -1,5 +1,6 @@
 var config = require('../config.js');
-var pg = require('pg').native;
+//var pg = require('pg').native;
+var pg = require('pg');
 
 var connectionString = config.dbUrl;
 

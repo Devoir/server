@@ -23,8 +23,7 @@
     "morgan": "^1.4.1",
     "passport": "^0.2.1",
     "passport-google-oauth": "^0.1.5",
-    "pg": "~4.2.0",
-    "pg-native": "~1.8.0"
+    "pg": "~4.2.0"
   },
   "devDependencies": {
     "errorhandler": "^1.2.2",
