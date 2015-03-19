@@ -12,7 +12,7 @@ exports.taskView = function (req, res) {
 	// if (!req.isAuthenticated())
 	// 	return res.redirect('/');
 
-	res.render('../templates/pages/taskView.ejs', req.user);
+	res.render('../templates/pages/taskView.ejs');
 };
 
 exports.calendar = function (req, res) {
@@ -20,5 +20,5 @@ exports.calendar = function (req, res) {
 	//if (!req.isAuthenticated())
 		//return res.redirect('/');
 
-	res.render('../templates/pages/calendarAttempt.ejs', req.user);
+	res.render('../templates/pages/calendarAttempt.ejs');
 };
