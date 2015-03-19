@@ -8,7 +8,7 @@ exports.home = function (req, res) {
 };
 
 exports.taskView = function (req, res) {
-	console.log('user', req.user);
+	// console.log('user', req.user);
 	// if (!req.isAuthenticated())
 	// 	return res.redirect('/');
 
