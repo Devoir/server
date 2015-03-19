@@ -1,7 +1,7 @@
 var app = angular.module('app', [
 	// 'services',
 	'controllers',
-	// 'directives'
+	'directives'
 ]);
 var controllers = controllers || angular.module('controllers', ['ui.calendar','ui.bootstrap']);
 

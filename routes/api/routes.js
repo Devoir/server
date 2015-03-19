@@ -13,12 +13,12 @@ module.exports = function (app) {
 	require('../params.js')(api);
 
 	// AUTHENTICATION
-	api.use(function (req, res, next) {
-		if (req.isAuthenticated()) return next();
+	// api.use(function (req, res, next) {
+	// 	if (req.isAuthenticated()) return next();
 		
-		res.statusCode = 401;
-		res.end();
-	});
+	// 	res.statusCode = 401;
+	// 	res.end();
+	// });
 
 	// USERS
 
