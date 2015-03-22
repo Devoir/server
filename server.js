@@ -31,7 +31,7 @@ require('./config/passport.js')(passport, config);
 // CONFIGURE EXPRESS
 //////////////////////
 
-var app = express();
+var app = exports.app = express();
 
 app.set('env', config.environment);
 app.set('view engine', 'ejs');
