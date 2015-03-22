@@ -26,12 +26,12 @@ describe('Course Routes', function () {
 		};
 
 		User.create(user1, function(err, result) {
-			assert.isNull(err, 'Error: ' + err);
+			assert.isNull(err, err);
 			assert(result.id, 'Should have gotten back an id');
 			newUserId = result.id;
 
 			User.create(user2, function(err, result) {
-				assert.isNull(err, 'Error: ' + err);
+				assert.isNull(err, err);
 				assert(result.id, 'Should have gotten back an id');
 				newUserId2 = result.id;
 				done();
@@ -41,10 +41,10 @@ describe('Course Routes', function () {
 
 	after(function(done) {
 		User.delete(newUserId, function(err, result) {
-			assert.isNull(err, 'Error: ' + err);
+			assert.isNull(err, err);
 
 			User.delete(newUserId2, function(err, result) {
-				assert.isNull(err, 'Error: ' + err);
+				assert.isNull(err, err);
 				done();
 			});
 		});
@@ -180,7 +180,7 @@ describe('Course Routes', function () {
 				//.send(data)
 				.expect(200)
 				.end(function(err, res) {
-					assert.isNull(err);
+					assert.isNull(err, err);
 					assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
 					assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
 					assert.equal(res.body.color, expectedResult.color, 'Incorrect color');
@@ -207,7 +207,7 @@ describe('Course Routes', function () {
 				//.send(data)
 				.expect(200)
 				.end(function(err, res) {
-					assert.isNull(err);
+					assert.isNull(err, err);
 					assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
 					assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
 					assert.equal(res.body.color, expectedResult.color, 'Incorrect color');
@@ -234,7 +234,7 @@ describe('Course Routes', function () {
 				//.send(data)
 				.expect(200)
 				.end(function(err, res) {
-					assert.isNull(err);
+					assert.isNull(err, err);
 					assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
 					assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
 					assert.equal(res.body.color, expectedResult.color, 'Incorrect color');
@@ -246,7 +246,7 @@ describe('Course Routes', function () {
 		});
 	});
 
-	/*describe('getByUserId', function () {
+	describe('getByUserId', function () {
 		it ('should select all courses for the specified user', function (done) {
 
 			var expectedResult = [];
@@ -269,88 +269,30 @@ describe('Course Routes', function () {
 				user_id: newUserId
 			});
 
-			Course.getByUserId(newUserId, function(err, courses) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(courses.length, expectedResult.length, 'Incorrect number of courses returned');
+			request(app)
+				.get('/api/courses/')
+				.send({userID: newUserId})
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.equal(res.body.length, expectedResult.length, 'Incorrect number of courses returned');
 
-				assert.equal(courses[0].id, expectedResult[0].id, "Incorrect course id for first course");
-				assert.equal(courses[0].name, expectedResult[0].name, 'Incorrect name for first course');
-				assert.equal(courses[0].color, expectedResult[0].color, 'Incorrect color for first course');
-				assert.equal(courses[0].visible, expectedResult[0].visible, 'Incorrect visible for first course');
-				assert.equal(courses[0].ical_feed_url, expectedResult[0].ical_feed_url, 'Incorrect ical feed url for first course');
-				assert.equal(courses[0].user_id, expectedResult[0].user_id, 'Incorrect user id for first course');
+					assert.equal(res.body[0].id, expectedResult[0].id, "Incorrect course id for first course");
+					assert.equal(res.body[0].name, expectedResult[0].name, 'Incorrect name for first course');
+					assert.equal(res.body[0].color, expectedResult[0].color, 'Incorrect color for first course');
+					assert.equal(res.body[0].visible, expectedResult[0].visible, 'Incorrect visible for first course');
+					assert.equal(res.body[0].ical_feed_url, expectedResult[0].ical_feed_url, 'Incorrect ical feed url for first course');
+					assert.equal(res.body[0].user_id, expectedResult[0].user_id, 'Incorrect user id for first course');
 
-				assert.equal(courses[1].id, expectedResult[1].id, "Incorrect course id for second course");
-				assert.equal(courses[1].name, expectedResult[1].name, 'Incorrect name for second course');
-				assert.equal(courses[1].color, expectedResult[1].color, 'Incorrect color for second course');
-				assert.equal(courses[1].visible, expectedResult[1].visible, 'Incorrect visible for second course');
-				assert.equal(courses[1].ical_feed_url, expectedResult[1].ical_feed_url, 'Incorrect ical feed url for second course');
-				assert.equal(courses[1].user_id, expectedResult[1].user_id, 'Incorrect user id for second course');
-
-				done();
-			});
-		});
-	});
-
-	describe('getAll', function () {
-		it ('should select all courses', function (done) {
-
-			var expectedResult = [];
-			
-			expectedResult.push({
-				id: newCourseId,
-				name: 'CS 428',
-				color: '#cccccc',
-				visible: true,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId
-			});
-
-			expectedResult.push({
-				id: newCourseId2,
-				name: 'CS 498R',
-				color: '#cccccc',
-				visible: false,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId
-			});
-
-			expectedResult.push({
-				id: newCourseId3,
-				name: 'CS 5000',
-				color: '#cccccc',
-				visible: false,
-				ical_feed_url: "http://ical.com",
-				user_id: newUserId2
-			});
-
-			Course.getAll(function(err, courses) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(courses.length, expectedResult.length, 'Incorrect number of courses returned');
-
-				assert.equal(courses[0].id, expectedResult[0].id, "Incorrect course id for first course");
-				assert.equal(courses[0].name, expectedResult[0].name, 'Incorrect name for first course');
-				assert.equal(courses[0].color, expectedResult[0].color, 'Incorrect color for first course');
-				assert.equal(courses[0].visible, expectedResult[0].visible, 'Incorrect visible for first course');
-				assert.equal(courses[0].ical_feed_url, expectedResult[0].ical_feed_url, 'Incorrect ical feed url for first course');
-				assert.equal(courses[0].user_id, expectedResult[0].user_id, 'Incorrect user id for first course');
-
-				assert.equal(courses[1].id, expectedResult[1].id, "Incorrect course id for second course");
-				assert.equal(courses[1].name, expectedResult[1].name, 'Incorrect name for second course');
-				assert.equal(courses[1].color, expectedResult[1].color, 'Incorrect color for second course');
-				assert.equal(courses[1].visible, expectedResult[1].visible, 'Incorrect visible for second course');
-				assert.equal(courses[1].ical_feed_url, expectedResult[1].ical_feed_url, 'Incorrect ical feed url for second course');
-				assert.equal(courses[1].user_id, expectedResult[1].user_id, 'Incorrect user id for second course');
-
-				assert.equal(courses[2].id, expectedResult[2].id, "Incorrect course id for third course");
-				assert.equal(courses[2].name, expectedResult[2].name, 'Incorrect name for third course');
-				assert.equal(courses[2].color, expectedResult[2].color, 'Incorrect color for third course');
-				assert.equal(courses[2].visible, expectedResult[2].visible, 'Incorrect visible for third course');
-				assert.equal(courses[2].ical_feed_url, expectedResult[2].ical_feed_url, 'Incorrect ical feed url for third course');
-				assert.equal(courses[2].user_id, expectedResult[2].user_id, 'Incorrect user id for third course');
-
-				done();
-			});
+					assert.equal(res.body[1].id, expectedResult[1].id, "Incorrect course id for second course");
+					assert.equal(res.body[1].name, expectedResult[1].name, 'Incorrect name for second course');
+					assert.equal(res.body[1].color, expectedResult[1].color, 'Incorrect color for second course');
+					assert.equal(res.body[1].visible, expectedResult[1].visible, 'Incorrect visible for second course');
+					assert.equal(res.body[1].ical_feed_url, expectedResult[1].ical_feed_url, 'Incorrect ical feed url for second course');
+					assert.equal(res.body[1].user_id, expectedResult[1].user_id, 'Incorrect user id for second course');
+					
+					done();
+				});
 		});
 	});
 
@@ -366,22 +308,28 @@ describe('Course Routes', function () {
 				user_id: newUserId2
 			};
 
-			Course.update(data, function(err, result) {
-				assert.isNull(err, 'Error: ' + err);
+			var expectedResult = data;
 
-				var expectedResult = data;
-
-				Course.getById(newCourseId, function(err, course) {
-					assert.isNull(err, 'Error: ' + err);
-					assert.equal(course.id, expectedResult.id, 'Incorrect id');
-					assert.equal(course.name, expectedResult.name, 'Incorrect name');
-					assert.equal(course.color, expectedResult.color, 'Incorrect color');
-					assert.equal(course.visible, expectedResult.visible, 'Incorrect visible');
-					assert.equal(course.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
-					assert.equal(course.user_id, expectedResult.user_id, 'Incorrect user id');
-					done();
+			request(app)
+				.put('/api/courses/' + newCourseId)
+				.send(data)
+				.expect(200)
+				.end(function(err, res) {
+					request(app)
+						.get('/api/courses/' + newCourseId)
+						//.send(data)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
+							assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
+							assert.equal(res.body.color, expectedResult.color, 'Incorrect color');
+							assert.equal(res.body.visible, expectedResult.visible, 'Incorrect visible');
+							assert.equal(res.body.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
+							assert.equal(res.body.user_id, expectedResult.user_id, 'Incorrect user id');
+							done();
+						});
 				});
-			});
 		});
 
 		it ('should update the second course', function (done) {
@@ -395,22 +343,28 @@ describe('Course Routes', function () {
 				user_id: newUserId
 			};
 
-			Course.update(data, function(err, result) {
-				assert.isNull(err, 'Error: ' + err);
+			var expectedResult = data;
 
-				var expectedResult = data;
-
-				Course.getById(newCourseId2, function(err, course) {
-					assert.isNull(err, 'Error: ' + err);
-					assert.equal(course.id, expectedResult.id, 'Incorrect id');
-					assert.equal(course.name, expectedResult.name, 'Incorrect name');
-					assert.equal(course.color, expectedResult.color, 'Incorrect color');
-					assert.equal(course.visible, expectedResult.visible, 'Incorrect visible');
-					assert.equal(course.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
-					assert.equal(course.user_id, expectedResult.user_id, 'Incorrect user id');
-					done();
+			request(app)
+				.put('/api/courses/' + newCourseId2)
+				.send(data)
+				.expect(200)
+				.end(function(err, res) {
+					request(app)
+						.get('/api/courses/' + newCourseId2)
+						//.send(data)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
+							assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
+							assert.equal(res.body.color, expectedResult.color, 'Incorrect color');
+							assert.equal(res.body.visible, expectedResult.visible, 'Incorrect visible');
+							assert.equal(res.body.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
+							assert.equal(res.body.user_id, expectedResult.user_id, 'Incorrect user id');
+							done();
+						});
 				});
-			});
 		});
 
 		it ('should update the third course', function (done) {
@@ -424,24 +378,30 @@ describe('Course Routes', function () {
 				user_id: newUserId2
 			};
 
-			Course.update(data, function(err, result) {
-				assert.isNull(err, 'Error: ' + err);
+			var expectedResult = data;
 
-				var expectedResult = data;
-
-				Course.getById(newCourseId3, function(err, course) {
-					assert.isNull(err, 'Error: ' + err);
-					assert.equal(course.id, expectedResult.id, 'Incorrect id');
-					assert.equal(course.name, expectedResult.name, 'Incorrect name');
-					assert.equal(course.color, expectedResult.color, 'Incorrect color');
-					assert.equal(course.visible, expectedResult.visible, 'Incorrect visible');
-					assert.equal(course.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
-					assert.equal(course.user_id, expectedResult.user_id, 'Incorrect user id');
-					done();
+			request(app)
+				.put('/api/courses/' + newCourseId3)
+				.send(data)
+				.expect(200)
+				.end(function(err, res) {
+					request(app)
+						.get('/api/courses/' + newCourseId3)
+						//.send(data)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
+							assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
+							assert.equal(res.body.color, expectedResult.color, 'Incorrect color');
+							assert.equal(res.body.visible, expectedResult.visible, 'Incorrect visible');
+							assert.equal(res.body.ical_feed_url, expectedResult.ical_feed_url, 'Incorrect ical feed url');
+							assert.equal(res.body.user_id, expectedResult.user_id, 'Incorrect user id');
+							done();
+						});
 				});
-			});
 		});
-	});*/
+	});
 
 	describe('delete', function() {
 		it ('should delete the first course', function (done) {
@@ -450,13 +410,17 @@ describe('Course Routes', function () {
 				//.send(data)
 				.expect(200)
 				.end(function(err, res) {
-					assert.isNull(err);
+					assert.isNull(err, err);
 
-					Course.getById(newCourseId, function(err, course) {
-						assert.isNull(err, 'Error: ' + err);
-						assert.isNull(course, 'First course was not deleted')
-						done();
-					});
+					request(app)
+						.get('/api/courses/' + newCourseId)
+						//.send(data)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.deepEqual(res.body, {}, 'An empty object should have been returned');
+							done();
+						});
 				});
 		});
 
@@ -467,13 +431,17 @@ describe('Course Routes', function () {
 				//.send(data)
 				.expect(200)
 				.end(function(err, res) {
-					assert.isNull(err);
+					assert.isNull(err, err);
 
-					Course.getById(newCourseId2, function(err, course) {
-						assert.isNull(err, 'Error: ' + err);
-						assert.isNull(course, 'Second course was not deleted')
-						done();
-					});
+					request(app)
+						.get('/api/courses/' + newCourseId2)
+						//.send(data)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.deepEqual(res.body, {}, 'An empty object should have been returned');
+							done();
+						});
 				});
 		});
 
@@ -484,13 +452,17 @@ describe('Course Routes', function () {
 				//.send(data)
 				.expect(200)
 				.end(function(err, res) {
-					assert.isNull(err);
+					assert.isNull(err, err);
 
-					Course.getById(newCourseId3, function(err, course) {
-						assert.isNull(err, 'Error: ' + err);
-						assert.isNull(course, 'Third course was not deleted')
-						done();
-					});
+					request(app)
+						.get('/api/courses/' + newCourseId3)
+						//.send(data)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.deepEqual(res.body, {}, 'An empty object should have been returned');
+							done();
+						});
 				});
 		});
 	});
