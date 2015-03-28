@@ -1,8 +1,18 @@
 <% include ../layout/header %>
-	<section id="directives-calendar" ng-controller="calendarCtrl">
-            <div class="well">
+	<section id="directives-calendar"><!-- ng-controller="calendarCtrl"-->
+	<div><button id="addbutton"> Add course</button></div>
+		<div id="calendar">
+			
+		</div>
+	
+	
+	
+	
+	
+	
+            <!--div class="well">
                 <div class="row-fluid">
-                    <!--div class="span4">
+                    <div class="span4">
                         
                         <div class="btn-group calTools">
                           <button class="btn" ng-click="changeLang()">
@@ -26,7 +36,7 @@
                             </li>
                         </ul>
 
-                    </div-->
+                    </div>
 
                     <div class="span8">
                         
@@ -34,7 +44,13 @@
                             <h4>{{alertMessage}}</h4>
                         </div>
                         <div class="btn-toolbar">
-                            <!--p class="pull-right lead">Calendar One View Options</p-->
+                            <p class="pull-right lead">Calendar One View Options</p>
+                            <form ng-submit="getCalendar()">
+								<input type="text" class="form-control" ng-model="calendarId" placeholder="calendar id">
+								<br>
+								<button type="submit" class="btn btn-primary">Get Calendar</button>
+								<br>
+							</form>
                             <div class="btn-group">
                                <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar1')">AgendaDay</button>
                                <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">AgendaWeek</button>
@@ -44,6 +60,6 @@
                          <div class="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>  
                     </div>
                 </div>
-            </div>
+            </div-->
 	</section>
 <% include ../layout/footer %>
