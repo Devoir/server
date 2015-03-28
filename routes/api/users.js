@@ -3,8 +3,17 @@ var User = require('../../model/Users.model.js');
 var ApiError = require('../../library/ApiError.js');
 var User = require('../../model/Users.model.js');
 
+exports.getFromEmail = function (req, res, next) {
+	User.getByEmail(function(err, result) {
+		if (err) {
+			return ApiError.handle(err, next);
+		}
+
+		res.json(result);
+	});
+};
+
 exports.getAllUsers = function (req, res, next) {
-	console.log(req.user, req.params);
 	User.getAll(function (err, users) {
 		if (err) return ApiError.handle(err, next);
 		
