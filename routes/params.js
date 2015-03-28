@@ -18,6 +18,11 @@ module.exports = function (app) {
 		next();
 	});
 
+	app.param('userId', function (req, res, next, id) {
+		req.userID = id;
+		next();
+	});
+
 	app.param('task', function (req, res, next, id) {
 		Task.getById(id, function (err, task) {
 			if (err) return next(err);

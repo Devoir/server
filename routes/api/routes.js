@@ -30,6 +30,7 @@ module.exports = function (app) {
 
 	// COURSES
 
+	api.get('/users/:userId/courses/', courses.getForUser);
 	api.get('/courses/', courses.getForUser);
 	api.post('/courses/', courses.create);
 	api.get('/courses/:course', courses.getOne);

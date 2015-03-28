@@ -294,6 +294,54 @@ describe('Course Routes', function () {
 					done();
 				});
 		});
+
+		it ('should select all courses for the specified user', function (done) {
+
+			var expectedResult = [];
+			
+			expectedResult.push({
+				id: newCourseId,
+				name: 'CS 428',
+				color: '#cccccc',
+				visible: true,
+				ical_feed_url: "http://ical.com",
+				user_id: newUserId
+			});
+
+			expectedResult.push({
+				id: newCourseId2,
+				name: 'CS 498R',
+				color: '#cccccc',
+				visible: false,
+				ical_feed_url: "http://ical.com",
+				user_id: newUserId
+			});
+
+			request(app)
+				.get('/api/users/' + newUserId + '/courses/')
+				//.send({userID: newUserId})
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.equal(res.body.length, expectedResult.length, 'Incorrect number of courses returned');
+
+					assert.equal(res.body[0].id, expectedResult[0].id, "Incorrect course id for first course");
+					assert.equal(res.body[0].name, expectedResult[0].name, 'Incorrect name for first course');
+					assert.equal(res.body[0].color, expectedResult[0].color, 'Incorrect color for first course');
+					assert.equal(res.body[0].visible, expectedResult[0].visible, 'Incorrect visible for first course');
+					assert.equal(res.body[0].ical_feed_url, expectedResult[0].ical_feed_url, 'Incorrect ical feed url for first course');
+					assert.equal(res.body[0].user_id, expectedResult[0].user_id, 'Incorrect user id for first course');
+
+					assert.equal(res.body[1].id, expectedResult[1].id, "Incorrect course id for second course");
+					assert.equal(res.body[1].name, expectedResult[1].name, 'Incorrect name for second course');
+					assert.equal(res.body[1].color, expectedResult[1].color, 'Incorrect color for second course');
+					assert.equal(res.body[1].visible, expectedResult[1].visible, 'Incorrect visible for second course');
+					assert.equal(res.body[1].ical_feed_url, expectedResult[1].ical_feed_url, 'Incorrect ical feed url for second course');
+					assert.equal(res.body[1].user_id, expectedResult[1].user_id, 'Incorrect user id for second course');
+					
+					done();
+				});
+		});
 	});
 
 	describe('update', function () {
