@@ -22,7 +22,7 @@ module.exports = function (app) {
 
 	// USERS
 
-	app.post('/login', users.getFromEmail);
+	api.post('/login', users.getFromEmail);
 	api.get('/users/', users.getAllUsers);
 	// api.post('/users/', users.create);
 	api.get('/users/:user', users.getOne);
