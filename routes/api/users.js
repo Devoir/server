@@ -4,7 +4,9 @@ var ApiError = require('../../library/ApiError.js');
 var User = require('../../model/Users.model.js');
 
 exports.getFromEmail = function (req, res, next) {
-	User.getByEmail(function(err, result) {
+	var email = req.body.email;
+
+	User.getByEmail(email, function(err, result) {
 		if (err) {
 			return ApiError.handle(err, next);
 		}
