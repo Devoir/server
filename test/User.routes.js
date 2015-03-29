@@ -108,14 +108,20 @@ describe('User Routes', function () {
 		});
 	});
 
-	/*describe('getById', function () {
-		it ('should return null', function (done) {
+	describe('getById', function () {
+		it ('should return an empty object', function (done) {
 
-			User.getById(-1, function(err, user) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.isNull(user, 'No user should have been returned')
-				done();
-			});
+			var expectedResult = {};
+
+			request(app)
+				.get('/api/users/' + -1)
+				//.send(email)
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
+					done();
+				});
 		});
 
 		it ('should select the first user inserted', function (done) {
@@ -123,16 +129,18 @@ describe('User Routes', function () {
 			var expectedResult = {
 				id: newUserId,
 				email: 'testa@email.com',
-				display_name: 'A Test'
+				display_name: 'Test A'
 			};
 
-			User.getById(newUserId, function(err, user) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(user.id, expectedResult.id, 'Incorrect id');
-				assert.equal(user.email, expectedResult.email, 'Incorrect email');
-				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
-				done();
-			});
+			request(app)
+				.get('/api/users/' + newUserId)
+				//.send(email)
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
+					done();
+				});
 		});
 
 		it ('should select the second user inserted', function (done) {
@@ -140,61 +148,18 @@ describe('User Routes', function () {
 			var expectedResult = {
 				id: newUserId2,
 				email: 'testb@email.com',
-				display_name: 'Bert Test'
+				display_name: 'Test B'
 			};
 
-			User.getById(newUserId2, function(err, user) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(user.id, expectedResult.id, 'Incorrect id');
-				assert.equal(user.email, expectedResult.email, 'Incorrect email');
-				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
-				done();
-			});
-		});
-	});
-
-	describe('getByEmail', function () {
-		it ('should return null', function (done) {
-
-			User.getByEmail('blah@email.com', function(err, user) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.isNull(user, 'No user should have been returned')
-				done();
-			});
-		});
-
-		it ('should select the first user inserted', function (done) {
-
-			var expectedResult = {
-				id: newUserId,
-				email: 'testa@email.com',
-				display_name: 'A Test'
-			};
-
-			User.getByEmail('testa@email.com', function(err, user) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(user.id, expectedResult.id, 'Incorrect id');
-				assert.equal(user.email, expectedResult.email, 'Incorrect email');
-				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
-				done();
-			});
-		});
-
-		it ('should select the second user inserted', function (done) {
-
-			var expectedResult = {
-				id: newUserId2,
-				email: 'testb@email.com',
-				display_name: 'Bert Test'
-			};
-
-			User.getByEmail('testb@email.com', function(err, user) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(user.id, expectedResult.id, 'Incorrect id');
-				assert.equal(user.email, expectedResult.email, 'Incorrect email');
-				assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
-				done();
-			});
+			request(app)
+				.get('/api/users/' + newUserId2)
+				//.send(email)
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
+					done();
+				});
 		});
 	});
 
@@ -202,23 +167,18 @@ describe('User Routes', function () {
 		it ('should select all users', function (done) {
 
 			var expectedResult = [];
-			expectedResult.push({id: newUserId, email: 'testa@email.com', display_name: 'A Test'});
-			expectedResult.push({id: newUserId2, email: 'testb@email.com', display_name: 'Bert Test'});
+			expectedResult.push({id: newUserId, email: 'testa@email.com', display_name: 'Test A'});
+			expectedResult.push({id: newUserId2, email: 'testb@email.com', display_name: 'Test B'});
 
-			User.getAll(function(err, users) {
-				assert.isNull(err, 'Error: ' + err);
-				assert.equal(users.length, expectedResult.length, 'Incorrect number of users returned');
-
-				assert.equal(users[0].id, expectedResult[0].id, 'Incorrect id for first user');
-				assert.equal(users[0].email, expectedResult[0].email, 'Incorrect email for first user');
-				assert.equal(users[0].display_name, expectedResult[0].display_name, 'Incorrect display_name for first user');
-
-				assert.equal(users[1].id, expectedResult[1].id, 'Incorrect id for second user');
-				assert.equal(users[1].email, expectedResult[1].email, 'Incorrect email for second user');
-				assert.equal(users[1].display_name, expectedResult[1].display_name, 'Incorrect display_name for second user');
-
-				done();
-			});
+			request(app)
+				.get('/api/users/')
+				//.send(email)
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
+					done();
+				});
 		});
 	});
 
@@ -228,22 +188,29 @@ describe('User Routes', function () {
 			var data = {
 				id: newUserId,
 				email: 'updatetesta@email.com',
-				display_name: 'Update A Test'
+				display_name: 'Test A Update'
 			};
 
-			User.update(data, function(err, result) {
-				assert.isNull(err, 'Error: ' + err);
+			var expectedResult = data;
 
-				var expectedResult = data;
-
-				User.getById(newUserId, function(err, user) {
-					assert.isNull(err, 'Error: ' + err);
-					assert.equal(user.id, expectedResult.id, 'Incorrect id');
-					assert.equal(user.email, expectedResult.email, 'Incorrect email');
-					assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
-					done();
+			request(app)
+				.put('/api/users/' + newUserId)
+				.send(data)
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.deepEqual(res.body, {}, 'Wrong object was returned');
+					
+					request(app)
+						.get('/api/users/' + newUserId)
+						//.send(email)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
+							done();
+						});
 				});
-			});
 		});
 
 		it ('should update the second user', function (done) {
@@ -251,22 +218,29 @@ describe('User Routes', function () {
 			var data = {
 				id: newUserId2,
 				email: 'updatetestb@email.com',
-				display_name: 'Update Bert Test'
+				display_name: 'Test B Update'
 			};
 
-			User.update(data, function(err, result) {
-				assert.isNull(err, 'Error: ' + err);
+			var expectedResult = data;
 
-				var expectedResult = data;
+			request(app)
+				.put('/api/users/' + newUserId2)
+				.send(data)
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+					assert.deepEqual(res.body, {}, 'Wrong object was returned');
 
-				User.getById(newUserId2, function(err, user) {
-					assert.isNull(err, 'Error: ' + err);
-					assert.equal(user.id, expectedResult.id, 'Incorrect id');
-					assert.equal(user.email, expectedResult.email, 'Incorrect email');
-					assert.equal(user.display_name, expectedResult.display_name, 'Incorrect display_name');
-					done();
+					request(app)
+						.get('/api/users/' + newUserId2)
+						//.send(email)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
+							done();
+						});
 				});
-			});
 		});
-	});*/
+	});
 });

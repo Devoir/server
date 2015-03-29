@@ -25,7 +25,7 @@ module.exports = function (app) {
 	api.post('/login', users.getFromEmail);
 	api.get('/users/', users.getAllUsers);
 	// api.post('/users/', users.create);
-	api.get('/users/:user', users.getOne);
+	api.get('/users/:userId', users.getOne);
 	api.put('/users/:user', users.update);
 
 	// COURSES
