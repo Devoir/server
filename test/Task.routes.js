@@ -13,10 +13,16 @@ describe('Task Routes', function () {
 	var newTaskId;
 	var newTaskId2;
 	var newTaskId3;
-	var dateString = '2015/01/01';
-	var dateObject = new Date("January 1, 2015 00:00:00");
+	//var dateString = '2015/01/01';
+	//var dateObject = new Date("January 1, 2015 00:00:00");
+	var dateObject = new Date();
+	var dateString = dateObject.toISOString();
 	var dateStringUpdated = '2015/05/05';
 	var dateObjectUpdated = new Date("May 5, 2015 00:00:00");
+	//var newDate = new Date();
+	//var newDateToUTC = newDate.toUTCString();
+	//console.log(newDate);
+	//console.log(newDateToUTC);
 
 	before(function(done) {
 		var user = {
@@ -177,7 +183,7 @@ describe('Task Routes', function () {
 		});
 	});
 
-	/*describe('getById', function () {
+	describe('getById', function () {
 		it ('should return an empty object', function (done) {
 
 			request(app)
@@ -197,12 +203,12 @@ describe('Task Routes', function () {
 				id: newTaskId,
 				name: 'homework1',
 				description: 'boring stuff',
-				start_date: dateObject,
-				end_date: dateObject,
+				start_date: dateString,
+				end_date: dateString,
 				complete: false,
 				visible: false,
-				user_last_updated: dateObject,
-				ical_last_updated: dateObject,
+				user_last_updated: dateString,
+				ical_last_updated: dateString,
 				course_id: newCourseId
 			};
 
@@ -212,16 +218,7 @@ describe('Task Routes', function () {
 				.expect(200)
 				.end(function(err, res) {
 					assert.isNull(err, err);
-					assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
-					assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
-					assert.equal(res.body.description, expectedResult.description, 'Incorrect description');
-					assert.equal(res.body.start_date, expectedResult.start_date, 'Incorrect start date');
-					assert.equal(res.body.end_date, expectedResult.end_date, 'Incorrect end date');
-					assert.equal(res.body.complete, expectedResult.complete, 'Incorrect complete');
-					assert.equal(res.body.visible, expectedResult.visible, 'Incorrect visible');
-					assert.equal(res.body.user_last_updated, expectedResult.user_last_updated, 'Incorrect user last updated');
-					assert.equal(res.body.ical_last_updated, expectedResult.ical_last_updated, 'Incorrect ical last updated');
-					assert.equal(res.body.course_id, expectedResult.course_id, 'Incorrect course id');
+					assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
 					done();
 				});
 		});
@@ -232,12 +229,12 @@ describe('Task Routes', function () {
 				id: newTaskId2,
 				name: 'homework2',
 				description: 'boring stuff',
-				start_date: dateObject,
-				end_date: dateObject,
+				start_date: dateString,
+				end_date: dateString,
 				complete: true,
 				visible: true,
-				user_last_updated: dateObject,
-				ical_last_updated: dateObject,
+				user_last_updated: dateString,
+				ical_last_updated: dateString,
 				course_id: newCourseId
 			};
 
@@ -247,16 +244,7 @@ describe('Task Routes', function () {
 				.expect(200)
 				.end(function(err, res) {
 					assert.isNull(err, err);
-					assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
-					assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
-					assert.equal(res.body.description, expectedResult.description, 'Incorrect description');
-					assert.equal(res.body.start_date, expectedResult.start_date, 'Incorrect start date');
-					assert.equal(res.body.end_date, expectedResult.end_date, 'Incorrect end date');
-					assert.equal(res.body.complete, expectedResult.complete, 'Incorrect complete');
-					assert.equal(res.body.visible, expectedResult.visible, 'Incorrect visible');
-					assert.equal(res.body.user_last_updated, expectedResult.user_last_updated, 'Incorrect user last updated');
-					assert.equal(res.body.ical_last_updated, expectedResult.ical_last_updated, 'Incorrect ical last updated');
-					assert.equal(res.body.course_id, expectedResult.course_id, 'Incorrect course id');
+					assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
 					done();
 				});
 		});
@@ -267,12 +255,12 @@ describe('Task Routes', function () {
 				id: newTaskId3,
 				name: 'homework3',
 				description: 'boring stuff',
-				start_date: dateObject,
-				end_date: dateObject,
+				start_date: dateString,
+				end_date: dateString,
 				complete: true,
 				visible: false,
-				user_last_updated: dateObject,
-				ical_last_updated: dateObject,
+				user_last_updated: dateString,
+				ical_last_updated: dateString,
 				course_id: newCourseId2
 			};
 
@@ -282,16 +270,7 @@ describe('Task Routes', function () {
 				.expect(200)
 				.end(function(err, res) {
 					assert.isNull(err, err);
-					assert.equal(res.body.id, expectedResult.id, 'Incorrect ID');
-					assert.equal(res.body.name, expectedResult.name, 'Incorrect name');
-					assert.equal(res.body.description, expectedResult.description, 'Incorrect description');
-					assert.equal(res.body.start_date, expectedResult.start_date, 'Incorrect start date');
-					assert.equal(res.body.end_date, expectedResult.end_date, 'Incorrect end date');
-					assert.equal(res.body.complete, expectedResult.complete, 'Incorrect complete');
-					assert.equal(res.body.visible, expectedResult.visible, 'Incorrect visible');
-					assert.equal(res.body.user_last_updated, expectedResult.user_last_updated, 'Incorrect user last updated');
-					assert.equal(res.body.ical_last_updated, expectedResult.ical_last_updated, 'Incorrect ical last updated');
-					assert.equal(res.body.course_id, expectedResult.course_id, 'Incorrect course id');
+					assert.deepEqual(res.body, expectedResult, 'Wrong object was returned');
 					done();
 				});
 		});
