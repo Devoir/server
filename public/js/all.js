@@ -25,7 +25,7 @@ var app = angular.module('app', [
 						//end: new Date(data[d].end),
 						allDay: true});
 						
-						//document.write(data1[d].start);
+						//document.write(data1[d].description + ' ' + data1[d].start);
 
 					}
 					console.log("course populated");
