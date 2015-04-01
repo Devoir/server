@@ -17,7 +17,7 @@ $(document).ready(function() {
 					for (var d in data1){
 					//var task = {
 					eventlist.push({	title: data1[d].description,
-					start: data1[d].start,//new Date(data1[d].start),
+					start: data1[d].start,
 					//end: new Date(data[d].end),
 					allDay: false});
 					//};
