@@ -4,12 +4,9 @@ var app = angular.module('app', [
 	//'directives'
 ]);
 
-$(document).ready(function() {
+	$(document).ready(function() {
 
-    // page is now ready, initialize the calendar...
-	
-	
-			 function addCourse() {
+			function addCourse() {
 				var eventlist = [];
 				var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
 				var courseId = 5;
@@ -22,12 +19,14 @@ $(document).ready(function() {
 					success: function(data1) {
 					for (var d in data1){
 					//var task = {
-					eventlist.push({	title: data1[d].description,
-					start: new Date(data1[d].start),
-					//end: new Date(data[d].end),
-					allDay: false});
-					//};
-					//course.push(task);}
+					eventlist.push({	
+						title: data1[d].description,
+						start: new Date(data1[d].start),
+						//end: new Date(data[d].end),
+						allDay: true});
+						
+						//document.write(data1[d].start);
+
 					}
 					console.log("course populated");
 					//$('#calendar').fullCalendar('refetchEvents');
@@ -39,30 +38,32 @@ $(document).ready(function() {
 						textColor: 'black', // an option!
 						events : eventlist
 					};
-            
+            		
             return course;
         }
-     
-     
-    $('#calendar').fullCalendar({
-        // put your options and callbacks here
-        
-        
-        eventSources:  []   
-    });
-   
-$('#addbutton').click(function(){
+
+        $('#addbutton').click(function(){
 		console.log("add");
 		//$('#calendar').fullCalendar('refetchEvents');
 		var course = addCourse();
 		$('#calendar').fullCalendar('addEventSource', course);
 		console.log("after add");
     });
- 
-    
-    
 
-});
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			selectable: true,
+			selectHelper: true,
+			editable: true,
+		});
+		
+	});
 
 var controllers = controllers || angular.module('controllers', ['ui.calendar','ui.bootstrap']);
 
