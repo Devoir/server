@@ -18,20 +18,23 @@ var app = angular.module('app', [
 				
 					success: function(data1) {
 					for (var d in data1){
-					//var task = {
+				//	_start = moment(data1[d].start).format("YYYY-MM-DD HH:mm:ss");
+					 
 					eventlist.push({	
 						title: data1[d].description,
-						start: new Date(data1[d].start),
-						//end: new Date(data[d].end),
-						allDay: true});
+						start: new Date(data1[d].start), 
+				//		start: _start, 
+
+					//	end: new Date(data1[d].end),
+					//	allDay: false});
+						});
 						
-						//document.write(data1[d].start);
+						console.log(data1[d].description +'   ' +data1[d].start);
 
 					}
 					console.log("course populated");
 					//$('#calendar').fullCalendar('refetchEvents');
 				}});
-					
 					
 					var course = {
 						color: 'yellow',   // an option!
@@ -59,8 +62,7 @@ var app = angular.module('app', [
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			selectable: true,
-			selectHelper: true,
-			editable: true,
+			selectHelper: true
 		});
 		
 	});
@@ -94,12 +96,17 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
 		.success(function(data, status, headers, config) {
 			// this callback will be called asynchronously
 			// when the response is available
+			
+
 			for (var d in data){
-				//var task = {
+			//	_start = moment(data[d].start).format("YYYY-MM-DD HH:mm:ss");
+
 				course.events.push({	title: data[d].description,
 					start: new Date(data[d].start),
+			//		start: _start,
 					//end: new Date(data[d].end),
-					allDay: false});
+				//	allDay: false});
+					});
 				//};
 				//course.events.push(task);
 			}

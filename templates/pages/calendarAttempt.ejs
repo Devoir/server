@@ -1,6 +1,6 @@
 <% include ../layout/header %>
 	<section id="directives-calendar"><!-- ng-controller="calendarCtrl"-->
-	<div><button id="addbutton"> Add course</button></div>
+    <div><button id="addbutton" > Add course</button></div> 
 		<div id="calendar">
 			
 		</div>
@@ -62,4 +62,25 @@
                 </div>
             </div-->
 	</section>
+  <style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar'></div>
+
+</body>
 <% include ../layout/footer %>
