@@ -30,15 +30,6 @@ controllers.controller('taskViewCtrl', ['$scope', '$http', function ($scope, $ht
 			};
 			$scope.loadingFeed = false;
 		});
-		$http.get('/api/courses/' + courseId + '/tasks/')
-		.success(function(data, status, headers, config) {
-			// this callback will be called asynchronously
-			// when the response is available
-			for (var d in data)
-				$scope.events.push(data[d]);
-			
-			$scope.loadingFeed = false;
-		})
 	};
 
 	$scope.checkOff = function (event) {
