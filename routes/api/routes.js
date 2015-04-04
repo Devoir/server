@@ -41,7 +41,7 @@ module.exports = function (app) {
 
 	api.get('/courses/:course/tasks', tasks.getForCourse);
 	api.post('/courses/:course/tasks', tasks.create);
-	api.post('/courses/:course/tasks/import', tasks.importFromFeed);
+	api.post('/courses/:courseId/tasks/import', tasks.importFromFeed);
 
 	api.get('/tasks/:task', tasks.getOne);
 	api.put('/tasks/:task', tasks.update);

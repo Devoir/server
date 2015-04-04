@@ -626,4 +626,29 @@ describe('Task Routes', function () {
 				});
 		});
 	});
+
+	/*describe('import', function() {
+		it ('should import an iCalendar feed', function (done) {
+
+			var data = {'icalFeed': 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI'};
+
+			request(app)
+				.post('/api/courses/' + newCourseId + '/tasks/import')
+				.send(data)
+				.expect(200)
+				.end(function(err, res) {
+					assert.isNull(err, err);
+
+					request(app)
+						.get('/api/tasks/' + newTaskId3)
+						//.send(data)
+						.expect(200)
+						.end(function(err, res) {
+							assert.isNull(err, err);
+							assert.deepEqual(res.body, {}, 'An empty object should have been returned');
+							done();
+						});
+				});
+		});
+	});*/
 });
