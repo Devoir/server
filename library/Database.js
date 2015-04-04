@@ -2,6 +2,13 @@ var config = require('../config.js');
 //var pg = require('pg').native;
 var pg = require('pg');
 
+var types = require('pg').types;
+var timestampOID = 1114;
+types.setTypeParser(1114, function(stringValue) {
+	return stringValue + '+0000';
+  //return new Date(Date.parse(stringValue + '+0000'));
+});
+
 var connectionString = config.dbUrl;
 
 exports.query = function (query, callback) {

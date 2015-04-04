@@ -6,15 +6,20 @@ var Course =	require('../model/Courses.model.js');
 module.exports = function (app) {
 
 	app.param('user', function (req, res, next, id) {
-		// User.getById(id, function (err, user) {
-		// 	if (err) return next(err);
-		// 	req.userDB = user;
-		// 	next();
-		// });
+		/*User.getById(id, function (err, user) {
+		 	if (err) return next(err);
+		 	req.userDB = user;
+		 	next();
+		});*/
 
 		//FUTURE decide how to handle this for admins.
 		// but or now we already have req.user so we will use that
 
+		next();
+	});
+
+	app.param('userId', function (req, res, next, id) {
+		req.userID = id;
 		next();
 	});
 

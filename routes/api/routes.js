@@ -22,13 +22,15 @@ module.exports = function (app) {
 
 	// USERS
 
+	api.post('/login', users.getFromEmail);
 	api.get('/users/', users.getAllUsers);
 	// api.post('/users/', users.create);
-	api.get('/users/:user', users.getOne);
+	api.get('/users/:userId', users.getOne);
 	api.put('/users/:user', users.update);
 
 	// COURSES
 
+	api.get('/users/:userId/courses/', courses.getForUser);
 	api.get('/courses/', courses.getForUser);
 	api.post('/courses/', courses.create);
 	api.get('/courses/:course', courses.getOne);
@@ -39,7 +41,7 @@ module.exports = function (app) {
 
 	api.get('/courses/:course/tasks', tasks.getForCourse);
 	api.post('/courses/:course/tasks', tasks.create);
-	api.post('/courses/:course/tasks/import', tasks.importFromFeed);
+	api.post('/courses/:courseId/tasks/import', tasks.importFromFeed);
 
 	api.get('/tasks/:task', tasks.getOne);
 	api.put('/tasks/:task', tasks.update);

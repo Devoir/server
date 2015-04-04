@@ -19,13 +19,7 @@ if (process.env.NODE_ENV == "dev") {
 
 	Config.environment = "production";
 	Config.homeUrl = "http://107.170.243.119:3000";
-
-	Config.db = {
-		host: "localhost",
-		name: "TODO",
-		user: "TODO",
-		password: "TODO"
-	};	
+	Config.dbUrl = "postgres://dev:12dev34prod@localhost:5432/devoir";
 }
 
 Config.isLiveSite = function () {

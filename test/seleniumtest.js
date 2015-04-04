@@ -1,14 +1,14 @@
-var webdriver = require('selenium-webdriver');
+//var webdriver = require('selenium-webdriver');
 
-var driver = new webdriver.Builder()
+/*var driver = new webdriver.Builder()
 				.forBrowser('firefox')
-				.build();
+				.build();*/
 
 /*var driver = new webdriver.Builder().
    withCapabilities(webdriver.Capabilities.firefox()).
    build();*/
 
-driver.get('http://www.google.com');
+/*driver.get('http://www.google.com');
 driver.findElement(webdriver.By.name('q')).sendKeys('webdriver');
 driver.findElement(webdriver.By.name('btnG')).click();
 driver.wait(function() {
@@ -17,4 +17,4 @@ driver.wait(function() {
  });
 }, 1000);
 
-driver.quit();
+driver.quit();*/
