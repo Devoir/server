@@ -23,7 +23,7 @@ Next you will need to set up your DB
     $ createuser --interactive    
     #Enter name of role to add: test
     #Shall the new role be a superuser? y
-    $ createdb devoirtest    
+    $ createdb devoir test    
 
     #run postgres in another tab
     $ postgres -D /usr/local/var/postgres
