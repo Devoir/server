@@ -4,63 +4,58 @@ var app = angular.module('app', [
 	//'directives'
 ]);
 
-	$(document).ready(function() {
+$(document).ready(function() {
 
-			function addCourse() {
-				var eventlist = [];
-				var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
-				var courseId = 5;
-                 $.ajax({
-					 type:"POST",
-					url: '/api/courses/' + courseId + '/tasks/import',
-					data: {icalFeed : calendarId},
-					async:false,
-				
-					success: function(data1) {
-					for (var d in data1){
-					//var task = {
-					eventlist.push({	title: data1[d].description,
+    // page is now ready, initialize the calendar...
+	
+	
+	 function addCourse() {
+		var eventlist = [];
+		var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
+		var courseId = 5;
+        $.ajax({
+			type:"POST",
+			url: '/api/courses/' + courseId + '/tasks/import',
+			data: {icalFeed : calendarId},
+			//async:false,
+		
+			success: function(data1) {
+			for (var d in data1){
+				eventlist.push(
+				{	title: data1[d].description,
 					start: data1[d].start,
-					//end: new Date(data[d].end),
 					allDay: false});
-
-					}
-					console.log("course populated");
-					//$('#calendar').fullCalendar('refetchEvents');
-				}});
-					
-					
-					var course = {
-						color: 'yellow',   // an option!
-						textColor: 'black', // an option!
-						events : eventlist
-					};
-            		
-            return course;
-        }
-
-        $('#addbutton').click(function(){
+			}
+			console.log("course populated");
+			var course = {
+				color: 'yellow',   // an option!
+				textColor: 'black', // an option!
+				events : eventlist
+			};	
+			$('#calendar').fullCalendar('addEventSource', course);
+		}});
+    }
+     
+     
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+        
+        
+        eventSources:  []   
+    });
+   
+	$('#addbutton').click(function(){
 		console.log("add");
 		//$('#calendar').fullCalendar('refetchEvents');
 		var course = addCourse();
-		$('#calendar').fullCalendar('addEventSource', course);
+		
 		console.log("after add");
     });
+ 
+    
+    
 
-		$('#calendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			editable: true,
-			eventLimit: true, // allow "more" link when too many events
-			selectable: true,
-			selectHelper: true,
-			editable: true,
-		});
-		
-	});
+});
 
 var controllers = controllers || angular.module('controllers', ['ui.calendar','ui.bootstrap']);
 
