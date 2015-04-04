@@ -1,8 +1,67 @@
 var app = angular.module('app', [
 	// 'services',
 	'controllers',
-	'directives'
+	//'directives'
 ]);
+
+	$(document).ready(function() {
+
+			function addCourse() {
+				var eventlist = [];
+				var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
+				var courseId = 5;
+                 $.ajax({
+					 type:"POST",
+					url: '/api/courses/' + courseId + '/tasks/import',
+					data: {icalFeed : calendarId},
+					async:false,
+				
+					success: function(data1) {
+					for (var d in data1){
+					//var task = {
+					eventlist.push({	title: data1[d].description,
+					start: data1[d].start,
+					//end: new Date(data[d].end),
+					allDay: false});
+
+					}
+					console.log("course populated");
+					//$('#calendar').fullCalendar('refetchEvents');
+				}});
+					
+					
+					var course = {
+						color: 'yellow',   // an option!
+						textColor: 'black', // an option!
+						events : eventlist
+					};
+            		
+            return course;
+        }
+
+        $('#addbutton').click(function(){
+		console.log("add");
+		//$('#calendar').fullCalendar('refetchEvents');
+		var course = addCourse();
+		$('#calendar').fullCalendar('addEventSource', course);
+		console.log("after add");
+    });
+
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			selectable: true,
+			selectHelper: true,
+			editable: true,
+		});
+		
+	});
+
 var controllers = controllers || angular.module('controllers', ['ui.calendar','ui.bootstrap']);
 
 //angular.module('MyApp', ['ui.calendar', 'ui.bootstrap']);
@@ -11,9 +70,50 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
 	console.log('calendarCtrl loaded');
 
 	var date = new Date();
-    var d = date.getDate();
+    //var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
+    
+    $scope.calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
+	$scope.courses = [];
+	
+	$scope.getCalendar = function () {
+		$scope.loadingFeed = true;
+		var course = {
+			color: '#f00',
+			textcolor: "black",
+			events: []
+		};
+		
+		var courseId = 5;
+
+		$http.post('/api/courses/' + courseId + '/tasks/import', {icalFeed : $scope.calendarId})
+		.success(function(data, status, headers, config) {
+			// this callback will be called asynchronously
+			// when the response is available
+			for (var d in data){
+				//var task = {
+				course.events.push({	title: data[d].description,
+					start: new Date(data[d].start),
+					//end: new Date(data[d].end),
+					allDay: false});
+				//};
+				//course.events.push(task);
+			}
+			course.events.push({title: 'All Day Event',start: new Date(y, m, 1)});
+			$scope.courses.push(course);
+			$scope.loadingFeed = false;
+		})
+		.error(function(data, status, headers, config) {
+			// called asynchronously if an error occurs
+			// or server returns response with an error status.
+			$scope.error = {
+				data : data,
+				status : status
+			};
+			$scope.loadingFeed = false;
+		});
+	};
     
     //$scope.changeTo = 'Hungarian';
     /* event source that pulls from google.com 
@@ -24,12 +124,12 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
     };*/
     /* event source that contains custom events on the scope */
     $scope.events = [
-      {title: 'All Day Event',start: new Date(y, m, 1)},
+      /*{title: 'All Day Event',start: new Date(y, m, 1)},
       {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
       {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
       {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
       {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
+      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}*/
     ];
     /* event source that calls a function on every view switch 
     $scope.eventsF = function (start, end, timezone, callback) {
@@ -98,7 +198,7 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       }
     };
      /* Render Tooltip */
-    /*$scope.eventRender = function( event, element, view ) { 
+    $scope.eventRender = function( event, element, view ) { 
         element.attr({'tooltip': event.title,
                      'tooltip-append-to-body': true});
         $compile(element)($scope);
@@ -120,19 +220,9 @@ controllers.controller('calendarCtrl', ['$scope','$compile','uiCalendarConfig', 
       }
     };
 
-    /*$scope.changeLang = function() {
-      if($scope.changeTo === 'Hungarian'){
-        $scope.uiConfig.calendar.dayNames = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Vas", "Hét", "Kedd", "Sze", "Csüt", "Pén", "Szo"];
-        $scope.changeTo= 'English';
-      } else {
-        $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        $scope.changeTo = 'Hungarian';
-      }
-    };
+    
     /* event sources array*/
-    $scope.eventSources = [$scope.events];//, $scope.eventSource, $scope.eventsF];
+    $scope.eventSources = [$scope.events, $scope.courses];//, $scope.eventSource, $scope.eventsF];
     //$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 }]);
 
@@ -175,6 +265,15 @@ controllers.controller('taskViewCtrl', ['$scope', '$http', function ($scope, $ht
 			};
 			$scope.loadingFeed = false;
 		});
+		$http.get('/api/courses/' + courseId + '/tasks/')
+		.success(function(data, status, headers, config) {
+			// this callback will be called asynchronously
+			// when the response is available
+			for (var d in data)
+				$scope.events.push(data[d]);
+			
+			$scope.loadingFeed = false;
+		})
 	};
 
 	$scope.checkOff = function (event) {

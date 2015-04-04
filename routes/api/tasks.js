@@ -5,7 +5,18 @@ var Task = require('../../model/Tasks.model.js');
 
 exports.getForCourse = function (req, res, next) {
 
-	res.json({ not : 'implented'});
+	if (!req.course)
+		return ApiError.handle(new Error('invalid course id'), next, 400);
+
+	var id = req.course.id;
+
+	Task.getByCourseId(id, function(err, results) {
+		if (err) {
+			return ApiError.handle(err, next);
+		}
+
+		res.json(results);
+	});
 };
 
 exports.create = function (req, res, next) {
