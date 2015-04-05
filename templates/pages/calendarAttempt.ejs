@@ -1,7 +1,14 @@
 <% include ../layout/header %>
 	<section id="directives-calendar">
-	<div><button id="addbutton"> Add course</button></div>
-		<div id="calendar"></div>
+	
+	<!-- left column has the add a course and displays the courses that are being displayed -->
+	<div id="leftcolumn">
+		<button id="addbutton"> Add course</button>
+		<br>
+		<div id="loadedcourses">Course List</div>
+	</div>
+	
+	<div id="calendar"></div>
 	
 	</section>
   <style>
