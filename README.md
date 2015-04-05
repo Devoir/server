@@ -1,16 +1,5 @@
 # DEVOIR    
 
-##To get the calendar to work
-
-Go to the ui-calendar-master directory in the public directory
-
-Run:
-
-	$npm install	
-	$bower install
-	
-after that the full calendar stuff will be installed and usable
-
 ##Run the server
 To run the server make sure you have **node** and **npm** (node package manager) installed.
 
