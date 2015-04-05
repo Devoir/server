@@ -36,7 +36,8 @@ $(document).ready(function() {
 				textColor: 'black', 
 				
 				events : eventlist,
-				id: courses.length
+				id: courses.length,
+				visible : true
 			};	
 			$('#calendar').fullCalendar('addEventSource', course);
 			courses.push(course);
@@ -71,7 +72,14 @@ $(document).ready(function() {
 		console.log("clicked course "+event.target.title);
 		var id = parseInt(event.target.title);
 		var course = courses[id]; 
-		$('#calendar').fullCalendar('removeEventSource',course);
+		if( course.visible ){
+			$('#calendar').fullCalendar('removeEventSource',course);
+			course.visible = false;
+		}
+		else{
+			$('#calendar').fullCalendar('addEventSource',course);
+			course.visible = true;
+		}
 	 });
      
     $('#calendar').fullCalendar({
