@@ -84,7 +84,17 @@ $(document).ready(function() {
      
     $('#calendar').fullCalendar({
         // put your options and callbacks here
-        
+        header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		selectable: true,
+		selectHelper: true,
+		editable: true,
+		
         
         eventSources:  []
         //getEventList: function (){ return eventSources;}
