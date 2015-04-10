@@ -1,35 +1,50 @@
 <% include ../layout/header %>
-	<section id="directives-calendar">
+	<section class="calendar-page">
 	
-	<!-- left column has the add a course and displays the courses that are being displayed -->
-	<div id="leftcolumn">
-		<button id="addbutton"> Add course</button>
-		<br>
-		<div id="loadedcourses"><b>Course List:</b><br><i>(click course to toggle)</i></div>
-	</div>
+		<!-- left column has the add a course and displays the courses that are being displayed -->
+		<div id="leftcolumn">
+			<button id="addbutton"> Add course</button>
+			<br>
+			<div id="loadedcourses"><b>Course List:</b><br><i>(click course to toggle)</i></div>
+		</div>
+		<div id="modalBackground" class="modalBackground">
+			
+		</div>
+		<div class="dialogbox" id="addSongDialog">
+			
+			<h2>Add a Course</h2>
+			<p>Import from an existing iCal feed</p>
+			<div style="display: -webkit-box">
+			<p>iCal Feed</p>
+			<input id="iCalFeedField" type="text">
+			 <button id="importCourse">Import</button>
+			</div>
+			<button id="closeAddSongDialog"> cancel </button>
+		</div>
+		<div class="dialogbox" id="nameCourseDialog">
+			<p> Course Successfully Loaded </p><br>
+			<h2>Give the Course a Name</h2>
+			<div style="display: -webkit-box">
+			<p>Course Name:</p>
+			<input id="courseNameField" type="text">
+			 <button id="nameCourseButton">Apply Name</button>
+			</div>
+		</div>
+		<div class="dialogbox loading" id="loading">
+			<h2> Importing Course... </h2>
+		</div>
+		
+		<div class="dialogbox details" id="taskDetailsDialog">
+			<div id="taskDetailsDiv"></div>
+			<div style="display: -webkit-box">
+				<button id="incomplete"> Incomplete </button>
+				<button id="complete"> Complete </button>
+			</div>
+			<button id="closeDetailsButton"> Close </button>
+		</div>
 	
-	<div id="calendar"></div>
+		<div id="calendar"></div>
 	
 	</section>
-  <style>
 
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-</style>
-
-<!--body>
-
-  <div id='calendar'></div>
-
-</body-->
 <% include ../layout/footer %>

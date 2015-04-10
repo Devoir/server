@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
 	var courses= [];
+	var courseBeingLoaded;
 	
 	 function addCourse() {
 		var eventlist = [];
@@ -37,44 +38,62 @@ $(document).ready(function() {
 				Color = 'orange';
 			}
 			console.log("course populated");
+			var n = 'Course ' + courses.length;
 			var course = {
 				color: Color,   
 				textColor: 'black', 
-				
+				courseName: n,
 				events : eventlist,
 				id: courses.length,
 				visible : true
 			};	
-			$('#calendar').fullCalendar('addEventSource', course);
-			courses.push(course);
-			addCourseToList(course);
-			//var list = $('#calendar').fullCalendar('getEventList');
-			//$('#calendar').fullCalendar('refetchEvents');
+			courseBeingLoaded = course;
+			getCourseName(course);
 			
-		}});
+		},
+		error: function(){
+			//inform user that the course failed to load
+		}
+	});
     }
     
-    function addCourseToList( course ){
-		//var obj = $('#loadedcoursed');
-		//var str = $('#loadedcourses').innerHTML;
+    function getCourseName( course ){
+		//inform user that course loaded successfully
+		//prompt user to give a name for the course
+		$('#loading').css("visibility", "hidden");
+		$('#nameCourseDialog').css("visibility", "visible");
+		$('#modalBackground').css("opacity", "0.5");
+	};
+    
+    $('#nameCourseButton').click(function(){
+		var name = $('#courseNameField').val();
+		if( name == "" ) alert("name empty");
+		else{
+			courseBeingLoaded.courseName = name;
+			$('#courseNameField').val("");
+			$('#nameCourseDialog').css("visibility", "hidden");
+			$('#modalBackground').css("opacity", "0");
+			addCourseToList(courseBeingLoaded);
+			$('#calendar').fullCalendar('addEventSource', courseBeingLoaded);
+			courses.push(courseBeingLoaded);
+		}
+	});
+    
+    function addCourseToList( course ){	
 		var div = document.createElement("DIV");    
 		var id = "course"+course.id;    
 		div.id = id;
 		div.title= course.id;
 		div.className = "course";
 		div.style.backgroundColor = course.color;
-		var s = 'Course '+course.id;
-		var t = document.createTextNode(s); 
+		var t = document.createTextNode(course.courseName); 
 		
 		div.appendChild(t);
-		//var s = '<div id="course'+course.id+'" style="background-color:'+course.color+'"> Course '+course.id+'</div><br>';
-		//str += s;
 		$('#loadedcourses').append(div);
 	}
 	
     $('#loadedcourses').click( function(event){
 		
-		//REMOVES A COURSE, NEEDS TO BE ABLE TO TOGGLE THE COURSE
 		console.log("clicked course "+event.target.title);
 		var id = parseInt(event.target.title);
 		var course = courses[id]; 
@@ -98,21 +117,63 @@ $(document).ready(function() {
 		editable: true,
 		eventLimit: true, // allow "more" link when too many events
 		selectable: true,
-		selectHelper: true,
-		editable: true,
-		
-        
-        eventSources:  []
-        //getEventList: function (){ return eventSources;}
+		selectHelper: true,      
+        eventSources:  [],
+        eventClick: function(calEvent, jsEvent, view) {
+			//alert('Event: ' + calEvent.title);
+			//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+			//alert('View: ' + view.name);
+
+			//call display task details
+			displayTaskDetails(calEvent,jsEvent);
+			// change the border color just for fun
+			//$(this).css('border-color', 'red');
+
+		}
     });
+   
+   function displayTaskDetails(calEvent, jsEvent){
+	   $('#taskDetailsDialog').css("visibility","visible");
+	   var str = '<h3 style="text-align:center">'+calEvent.source.courseName+'</h3>'; 
+	   str+='<p>'+calEvent.title+'</p>';
+	   $('#taskDetailsDiv').html( str );
+	   var width = $('#taskDetailsDialog').css("width");
+	   var height = $('#taskDetailsDialog').css("height");
+	   
+	   var taskX = jsEvent.pageX;
+	   var taskY = jsEvent.pageY;
+	   var left = taskX- parseInt(width)-parseInt(width)/2;
+	   var top = taskY - parseInt(height)-10;
+	   $('#taskDetailsDialog').css("top",top);
+	   $('#taskDetailsDialog').css("left",left);
+	   
+   }
+   
+   $('#closeDetailsButton').click(function(){
+		 $('#taskDetailsDialog').css("visibility","hidden");
+   });
    
 	$('#addbutton').click(function(){
 		console.log("add");
-		//$('#calendar').fullCalendar('refetchEvents');
-		var course = addCourse();
+		//ask if want to create a custom course or import an existing feed
+		$('#addSongDialog').css("visibility", "visible");
+		$('#modalBackground').css("opacity", "0.5");
 		
-		console.log("after add");
+		//var course = addCourse();
     });
+    
+    $('#importCourse').click(function(){
+		$('#addSongDialog').css("visibility", "hidden");
+		$('#loading').css("visibility", "visible");
+		//display loading dialog
+		var course = addCourse();
+	});
+	
+	$('#closeAddSongDialog').click(function(){
+		$('#addSongDialog').css("visibility", "hidden");
+		$('#modalBackground').css("opacity", "0");
+	});
+	
  
     
     
