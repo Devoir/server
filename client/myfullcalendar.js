@@ -3,6 +3,7 @@ $(document).ready(function() {
     // page is now ready, initialize the calendar...
 	var courses= [];
 	var courseBeingLoaded;
+	var currentTask;
 	
 	 function addCourse() {
 		var eventlist = [];
@@ -25,7 +26,9 @@ $(document).ready(function() {
 				eventlist.push(
 				{	title: data1[d].description,
 					start: data1[d].start_date,
-					allDay: false});
+					allDay: false,
+					completed: false
+				});
 			}
 			var Color = 'yellow';
 			if( courses.length == 1 ){
@@ -80,16 +83,24 @@ $(document).ready(function() {
 		div.title= course.id;
 		div.className = "course";
 		div.style.backgroundColor = course.color;
+		div.style.paddingLeft = "5px";
 		var t = document.createTextNode(course.courseName); 
+		var box = document.createElement("INPUT");
+		box.setAttribute("type", "checkbox");
+		box.setAttribute("checked",true);
+		box.id = "checkbox";
+		box.style.float = "right";
 		
 		div.appendChild(t);
+		div.appendChild(box);
 		$('#loadedcourses').append(div);
 	}
 	
     $('#loadedcourses').click( function(event){
 		
 		console.log("clicked course "+event.target.title);
-		var id = parseInt(event.target.title);
+		if( event.target.type == 'checkbox' ){
+		var id = parseInt(event.target.parentElement.title);
 		var course = courses[id]; 
 		if( course.visible ){
 			$('#calendar').fullCalendar('removeEventSource',course);
@@ -99,6 +110,7 @@ $(document).ready(function() {
 			$('#calendar').fullCalendar('addEventSource',course);
 			course.visible = true;
 		}
+	}
 	 });
      
     $('#calendar').fullCalendar({
@@ -114,10 +126,7 @@ $(document).ready(function() {
 		selectHelper: true,      
         eventSources:  [],
         eventClick: function(calEvent, jsEvent, view) {
-			//alert('Event: ' + calEvent.title);
-			//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-			//alert('View: ' + view.name);
-
+			currentTask = calEvent;
 			//call display task details
 			displayTaskDetails(calEvent,jsEvent);
 			// change the border color just for fun
@@ -141,7 +150,35 @@ $(document).ready(function() {
 	   $('#taskDetailsDialog').css("top",top);
 	   $('#taskDetailsDialog').css("left",left);
 	   
+	   //if completed, completed is deactivated, respectively the same for incomplete
+	   if( calEvent.completed ){
+		   $('#complete').prop("disabled",true);
+		   $('#incomplete').prop("disabled",false);
+	   }
+	   else{
+		   $('#complete').prop("disabled",false);
+		   $('#incomplete').prop("disabled",true);
+	   }
+	   
    }
+   
+   $('#complete').click(function(){
+	   currentTask.completed = true;
+	   currentTask.textColor= "white";
+	   currentTask.borderColor= "green";
+	   $('#calendar').fullCalendar('rerenderEvents');
+	   $('#complete').prop("disabled",true);
+	   $('#incomplete').prop("disabled",false);
+   });
+   
+   $('#incomplete').click(function(){
+	   currentTask.completed = false;
+	   currentTask.textColor = "black";
+	   currentTask.borderColor= "";
+	   $('#calendar').fullCalendar('rerenderEvents');
+	   $('#complete').prop("disabled",false);
+	   $('#incomplete').prop("disabled",true);
+   });
    
    $('#closeDetailsButton').click(function(){
 		 $('#taskDetailsDialog').css("visibility","hidden");

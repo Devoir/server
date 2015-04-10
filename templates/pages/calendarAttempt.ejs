@@ -5,24 +5,26 @@
 		<div id="leftcolumn">
 			<button id="addbutton"> Add course</button>
 			<br>
-			<div id="loadedcourses"><b>Course List:</b><br><i>(click course to toggle)</i></div>
+			<div id="loadedcourses" style="margin-bottom:5px"><b>Course List:</b><br><i>(click course to toggle)</i></div>
 		</div>
 		<div id="modalBackground" class="modalBackground">
 			
 		</div>
+		
 		<div class="dialogbox" id="addSongDialog">
 			
 			<h2>Add a Course</h2>
 			<p>Import from an existing iCal feed</p>
 			<div style="display: -webkit-box">
-			<p>iCal Feed</p>
+			<p>iCal Feed:</p>
 			<input id="iCalFeedField" type="text">
 			 <button id="importCourse">Import</button>
 			</div>
 			<button id="closeAddSongDialog"> cancel </button>
 		</div>
+		
 		<div class="dialogbox" id="nameCourseDialog">
-			<p> Course Successfully Loaded </p><br>
+			<p style="text-align:center"> Course Successfully Loaded </p>
 			<h2>Give the Course a Name</h2>
 			<div style="display: -webkit-box">
 			<p>Course Name:</p>
@@ -30,6 +32,7 @@
 			 <button id="nameCourseButton">Apply Name</button>
 			</div>
 		</div>
+		
 		<div class="dialogbox loading" id="loading">
 			<h2> Importing Course... </h2>
 		</div>
