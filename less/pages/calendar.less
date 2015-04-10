@@ -1,23 +1,27 @@
 section.calendar-page{
 	display: inline-block;
-
+	margin-top: 10px;
+	color: #414656;
+	//background:#E5E5E5;
+	
 	#leftcolumn{
 		//width: 50px;
 		width: 20%;
 		float: left;
 		display: block;
 		box-sizing: border-box;
-		padding-left: 10px;
+		padding-left: 40px;
 		padding-right: 20px;
 	}
 	
-	#calendar {
-		max-width: 900px;
+	#calendar { 
 		width:80%;
+		padding-left: 10px;
+		padding-right: 60px;
 		margin: 0 auto;
 		display: block;
 		float: left;
-		//box-sizing: border-box;
+		box-sizing: border-box;
 	}
 	
 	.modalBackground {
@@ -41,10 +45,10 @@ section.calendar-page{
 		width: 400px;
 		z-index: 99999;
 		position: fixed;
-		margin: auto 15%;
+		margin: auto 35%;
 		padding: 5px 20px 13px 20px;
 		border-radius: 10px;
-		background: #fff;
+		background:#E5E5E5;
 		//background: -moz-linear-gradient(#fff, #999);
 		//background: -webkit-linear-gradient(#fff, #999);
 		//background: -o-linear-gradient(#fff, #999);
@@ -59,9 +63,41 @@ section.calendar-page{
 		border-width: 1px;
 		border-style: solid;
 		width: 210px;
+		margin: auto auto;
 	}
-	<button>:disabled{
-		background: #dddddd;
+	
+	button {
+		width: 60px;
+		padding: 3px;
+		//border-radius: 3px;
+		background: #E5E5E5;
+		text-align: center;
+		color: #64718D;
 	}
+	
+	.button2 {
+		width: 100px;
+		background: #64718D;
+		color: #E5E5E5;
+		border-radius: 5px;
+	}
+	
+	.completeButton:disabled{
+		background: "green";
+	}
+
+	.incompleteButton:disabled{
+		background: "red";
+	}
+
+	
+	h2{
+		text-align:center;
+	}
+	
+	#closeAddSongButton {
+		margin-left: 120px
+	}
+	
 	
 }

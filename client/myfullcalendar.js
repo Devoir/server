@@ -5,6 +5,7 @@ $(document).ready(function() {
 	var courseBeingLoaded;
 	var currentTask;
 	
+	
 	 function addCourse() {
 		var eventlist = [];
 		//hardcoded courses for now, only allowing 2 for now
@@ -30,9 +31,9 @@ $(document).ready(function() {
 					completed: false
 				});
 			}
-			var Color = 'yellow';
+			var Color = "#44B8EA";
 			if( courses.length == 1 ){
-				Color = 'orange';
+				Color = "#F77C36";
 			}
 			console.log("course populated");
 			var n = 'Course ' + courses.length;
@@ -50,6 +51,7 @@ $(document).ready(function() {
 		},
 		error: function(){
 			//inform user that the course failed to load
+			alert("Course Failed to Load");
 		}
 	});
     }
@@ -64,7 +66,7 @@ $(document).ready(function() {
     
     $('#nameCourseButton').click(function(){
 		var name = $('#courseNameField').val();
-		if( name == "" ) alert("name empty");
+		if( name == "" ) alert("Name cannot be empty");
 		else{
 			courseBeingLoaded.courseName = name;
 			$('#courseNameField').val("");
@@ -145,7 +147,10 @@ $(document).ready(function() {
 	   
 	   var taskX = jsEvent.pageX;
 	   var taskY = jsEvent.pageY;
-	   var left = taskX- parseInt(width)-parseInt(width)/2;
+	   var w = parseInt(width);
+	   var h = parseInt(height);
+	   var w2 = w/2;
+	   var left = taskX- parseInt(width)+parseInt(width)/2;
 	   var top = taskY - parseInt(height)-10;
 	   $('#taskDetailsDialog').css("top",top);
 	   $('#taskDetailsDialog').css("left",left);
@@ -200,7 +205,7 @@ $(document).ready(function() {
 		var course = addCourse();
 	});
 	
-	$('#closeAddSongDialog').click(function(){
+	$('#closeAddSongButton').click(function(){
 		$('#addSongDialog').css("visibility", "hidden");
 		$('#modalBackground').css("opacity", "0");
 	});

@@ -1,35 +1,39 @@
 <% include ../layout/header %>
 	<section class="calendar-page">
-	
+	 
 		<!-- left column has the add a course and displays the courses that are being displayed -->
 		<div id="leftcolumn">
-			<button id="addbutton"> Add course</button>
+			<button class="button2" id="addbutton"> Add course</button>
 			<br>
-			<div id="loadedcourses" style="margin-bottom:5px"><b>Course List:</b><br><i>(click course to toggle)</i></div>
+			<div id="loadedcourses" style="margin-bottom:5px">
+				<h3>Course List:</h3>
+				<p><i>(click course to toggle)</i></p>
+			</div>
 		</div>
 		<div id="modalBackground" class="modalBackground">
 			
 		</div>
+		
 		
 		<div class="dialogbox" id="addSongDialog">
 			
 			<h2>Add a Course</h2>
 			<p>Import from an existing iCal feed</p>
 			<div style="display: -webkit-box">
-			<p>iCal Feed:</p>
-			<input id="iCalFeedField" type="text">
-			 <button id="importCourse">Import</button>
+			<p style="padding-right:5px; padding-top:5px">iCal Feed:</p>
+			<input id="iCalFeedField" type="text" size="21">
+			 <button class="button2" id="importCourse">Import</button>
 			</div>
-			<button id="closeAddSongDialog"> cancel </button>
+			<button class="button2" id="closeAddSongButton"> cancel </button>
 		</div>
 		
 		<div class="dialogbox" id="nameCourseDialog">
 			<p style="text-align:center"> Course Successfully Loaded </p>
 			<h2>Give the Course a Name</h2>
 			<div style="display: -webkit-box">
-			<p>Course Name:</p>
-			<input id="courseNameField" type="text">
-			 <button id="nameCourseButton">Apply Name</button>
+			<p style="padding-right:5px; padding-top:5px">Course Name:</p>
+			<input id="courseNameField" type="text"  size="19">
+			 <button class="button2" id="nameCourseButton">Apply Name</button>
 			</div>
 		</div>
 		
@@ -40,10 +44,10 @@
 		<div class="dialogbox details" id="taskDetailsDialog">
 			<div id="taskDetailsDiv"></div>
 			<div style="display: -webkit-box">
-				<button id="incomplete"> Incomplete </button>
-				<button id="complete"> Complete </button>
+				<button class="incompleteButton" id="incomplete"> Incomplete </button>
+				<button class="completeButton" id="complete"> Complete </button>
 			</div>
-			<button id="closeDetailsButton"> Close </button>
+			<button class="button2" id="closeDetailsButton"> Close </button>
 		</div>
 	
 		<div id="calendar"></div>
