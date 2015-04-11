@@ -157,12 +157,16 @@ $(document).ready(function() {
 	   
 	   //if completed, completed is deactivated, respectively the same for incomplete
 	   if( calEvent.completed ){
-		   $('#complete').prop("disabled",true);
-		   $('#incomplete').prop("disabled",false);
+		   //$('#complete').prop("disabled",true);
+		   $('#complete').addClass("completeButtonDisabled");
+		   //$('#incomplete').prop("disabled",false);
+		   $('#incomplete').removeClass("incompleteButtonDisabled");
 	   }
 	   else{
-		   $('#complete').prop("disabled",false);
-		   $('#incomplete').prop("disabled",true);
+		   //$('#complete').prop("disabled",false);
+		   $('#complete').removeClass("completeButtonDisabled");
+		   //$('#incomplete').prop("disabled",true);
+		   $('#incomplete').addClass("incompleteButtonDisabled");
 	   }
 	   
    }
@@ -172,8 +176,10 @@ $(document).ready(function() {
 	   currentTask.textColor= "white";
 	   currentTask.borderColor= "green";
 	   $('#calendar').fullCalendar('rerenderEvents');
-	   $('#complete').prop("disabled",true);
-	   $('#incomplete').prop("disabled",false);
+	   //$('#complete').prop("disabled",true);
+	   $('#complete').addClass("completeButtonDisabled");
+	   //$('#incomplete').prop("disabled",false);
+	   $('#incomplete').removeClass("incompleteButtonDisabled");
    });
    
    $('#incomplete').click(function(){
@@ -181,8 +187,10 @@ $(document).ready(function() {
 	   currentTask.textColor = "black";
 	   currentTask.borderColor= "";
 	   $('#calendar').fullCalendar('rerenderEvents');
-	   $('#complete').prop("disabled",false);
-	   $('#incomplete').prop("disabled",true);
+	   //$('#complete').prop("disabled",false);
+	   $('#complete').removeClass("completeButtonDisabled");
+	   //$('#incomplete').prop("disabled",true);
+	   $('#incomplete').addClass("incompleteButtonDisabled");
    });
    
    $('#closeDetailsButton').click(function(){
