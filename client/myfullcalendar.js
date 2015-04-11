@@ -11,7 +11,9 @@ $(document).ready(function() {
 		//hardcoded courses for now, only allowing 2 for now
 		if( courses.length == 2)
 			return;
-		var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
+		//var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=HD832sKIIdzI';
+		//var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=1k3dPM_6yUQq';
+		var calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=H8fsBR7q0yZ7';
 		if( courses.length == 1 ){
 			calendarId = 'https://learningsuite.byu.edu/iCalFeed/ical.php?courseID=AJRz4eKuTIIY';
 		}
