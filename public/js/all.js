@@ -163,41 +163,33 @@ $(document).ready(function() {
 	   
 	   //if completed, completed is deactivated, respectively the same for incomplete
 	   if( calEvent.completed ){
-		   //$('#complete').prop("disabled",true);
-		   $('#complete').addClass("completeButtonDisabled");
-		   //$('#incomplete').prop("disabled",false);
-		   $('#incomplete').removeClass("incompleteButtonDisabled");
+		   $('#completionButton').removeClass("incomplete").addClass("complete");
+		   $('#completionButton').html("Complete");
 	   }
 	   else{
-		   //$('#complete').prop("disabled",false);
-		   $('#complete').removeClass("completeButtonDisabled");
-		   //$('#incomplete').prop("disabled",true);
-		   $('#incomplete').addClass("incompleteButtonDisabled");
+		   $('#completionButton').removeClass("complete").addClass("incomplete");
+		   $('#completionButton').html("Incomplete");
 	   }
 	   
    }
    
-   $('#complete').click(function(){
-	   currentTask.completed = true;
-	   currentTask.textColor= "white";
-	   currentTask.borderColor= "green";
+   $('#completionButton').click(function(){
+	   currentTask.completed = !currentTask.completed;
+	   if ( currentTask.completed ){
+			currentTask.textColor= "green";
+			currentTask.borderColor= "green";
+			$('#completionButton').removeClass("incomplete").addClass("complete");
+			$('#completionButton').html("Complete");
+	   }
+	   else{
+		   currentTask.textColor= "black";
+		   currentTask.borderColor= "";
+		   $('#completionButton').removeClass("complete").addClass("incomplete");
+		   $('#completionButton').html("Incomplete");
+	   }
 	   $('#calendar').fullCalendar('rerenderEvents');
-	   //$('#complete').prop("disabled",true);
-	   $('#complete').addClass("completeButtonDisabled");
-	   //$('#incomplete').prop("disabled",false);
-	   $('#incomplete').removeClass("incompleteButtonDisabled");
    });
    
-   $('#incomplete').click(function(){
-	   currentTask.completed = false;
-	   currentTask.textColor = "black";
-	   currentTask.borderColor= "";
-	   $('#calendar').fullCalendar('rerenderEvents');
-	   //$('#complete').prop("disabled",false);
-	   $('#complete').removeClass("completeButtonDisabled");
-	   //$('#incomplete').prop("disabled",true);
-	   $('#incomplete').addClass("incompleteButtonDisabled");
-   });
    
    $('#closeDetailsButton').click(function(){
 		 $('#taskDetailsDialog').css("visibility","hidden");
